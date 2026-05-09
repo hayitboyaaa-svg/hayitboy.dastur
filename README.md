@@ -1,1 +1,235 @@
-bu mening birinchi saytim
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINOMEDIA | Professional Production</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Plus+Jakarta+Sans:wght@300;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #d4af37;
+            --neon: #00d2ff;
+            --bg: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        /* --- 1. ASOSIY REKLAMA BANNERI (Hero) --- */
+        .main-banner {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=2070') center/cover;
+            position: relative;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .banner-box {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 60px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 40px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.1);
+            transform: rotateX(5deg);
+        }
+
+        .banner-box h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 4rem);
+            color: var(--gold);
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* --- 2. KINOLAR GALEREYASI (3D Cards) --- */
+        .container { padding: 80px 10%; }
+        
+        .section-label {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 50px;
+            letter-spacing: 10px;
+            font-size: 1.5rem;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 50px;
+        }
+
+        .movie-card {
+            position: relative;
+            height: 500px;
+            border-radius: 25px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .movie-card:hover {
+            transform: translateY(-20px) rotateY(10deg) rotateX(5deg);
+            box-shadow: -20px 20px 50px rgba(0, 210, 255, 0.2);
+            border-color: var(--neon);
+        }
+
+        .movie-card img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .card-overlay {
+            position: absolute;
+            bottom: 0; width: 100%; height: 50%;
+            background: linear-gradient(transparent, #000);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px;
+        }
+
+        /* --- 3. HAMKORLIK BANNERI --- */
+        .collab-banner {
+            margin: 100px 10%;
+            padding: 80px;
+            background: linear-gradient(45deg, #111, #000);
+            border-radius: 30px;
+            border: 1px solid var(--gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .collab-text h2 { font-family: 'Orbitron'; font-size: 2rem; color: var(--gold); }
+
+        .btn-call {
+            padding: 20px 50px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn-call:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--gold); }
+
+        /* --- Video Player --- */
+        .player-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            display: none; z-index: 2000; justify-content: center; align-items: center;
+        }
+        .player-modal.active { display: flex; }
+        .video-box { width: 90%; max-width: 1000px; position: relative; }
+        .close { position: absolute; top: -50px; right: 0; color: #fff; font-size: 2rem; cursor: pointer; }
+
+        footer { text-align: center; padding: 50px; opacity: 0.4; font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .movie-grid { grid-template-columns: 1fr; }
+            .collab-banner { flex-direction: column; text-align: center; gap: 30px; padding: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- REKLAMA BANNERI -->
+    <section class="main-banner">
+        <div class="banner-box">
+            <p style="letter-spacing: 5px; color: var(--neon); font-weight: 300;">NEXT LEVEL PRODUCTION</p>
+            <h1>PREMIUM CINEMA</h1>
+            <p style="margin-top: 15px; opacity: 0.7;">Sizning g'oyangiz - bizning kinematografik ijromiz</p>
+        </div>
+    </section>
+
+    <!-- KINOLAR -->
+    <section class="container">
+        <h2 class="section-label">SELECTED WORKS</h2>
+        <div class="movie-grid">
+            
+            <div class="movie-card" onclick="openVideo('https://player.vimeo.com/external/494298150.sd.mp4?s=4042894191636c7a10dfa6c7e2d93e1f0e4b868f&profile_id=139')">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800" alt="Work">
+                <div class="card-overlay">
+                    <h3 style="font-family: 'Orbitron'; font-size: 1.5rem;">QAL'A JANGI</h3>
+                    <p style="color: var(--neon);">ACTION DRAMA / 2026</p>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openVideo('https://player.vimeo.com/external/459389137.sd.mp4?s=89417f2d5797cd1300e54ae3588a80397737d920&profile_id=139')">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800" alt="Work">
+                <div class="card-overlay">
+                    <h3 style="font-family: 'Orbitron'; font-size: 1.5rem;">SAHRO SIRI</h3>
+                    <p style="color: var(--neon);">CINEMATIC ART</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- HAMKORLIK BANNERI -->
+    <section class="collab-banner">
+        <div class="collab-text">
+            <h2>LOYIHAINGIZNI <br> BIZ BILAN BOSHLANG</h2>
+            <p style="margin-top: 10px; color: #888;">Professional reklama va kliplar uchun maxsus takliflar.</p>
+        </div>
+        <button class="btn-call" onclick="window.location.href='tel:+998901234567'">HAMKORLIK</button>
+    </section>
+
+    <!-- PLAYER -->
+    <div class="player-modal" id="pModal">
+        <div class="video-box">
+            <span class="close" onclick="closeVideo()">✕</span>
+            <video id="vPlayer" controls style="width: 100%; border-radius: 20px; box-shadow: 0 0 50px var(--neon);">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 KINOMEDIA | UNCOMPROMISED QUALITY
+    </footer>
+
+    <script>
+        const modal = document.getElementById('pModal');
+        const video = document.getElementById('vPlayer');
+
+        function openVideo(src) {
+            video.src = src;
+            modal.classList.add('active');
+            video.play();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideo() {
+            modal.classList.remove('active');
+            video.pause();
+            video.src = "";
+            document.body.style.overflow = 'auto';
+        }
+
+        modal.onclick = function(e) {
+            if(e.target === modal) closeVideo();
+        }
+    </script>
+</body>
+</html>
