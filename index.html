@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fast Translate AI</title>
 
-<title>iTranslate Pro</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,7 +13,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+    font-family:Poppins,sans-serif;
 }
 
 body{
@@ -22,208 +21,94 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:
-    radial-gradient(circle at top left,#4f46e5,#0f172a 40%),
-    radial-gradient(circle at bottom right,#7c3aed,#020617 35%);
-    overflow:hidden;
-    padding:20px;
+    background:linear-gradient(135deg,#0f172a,#1e1b4b);
+    padding:10px;
 }
 
-.blur1,
-.blur2{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(120px);
-    z-index:0;
-}
-
-.blur1{
-    width:350px;
-    height:350px;
-    background:#8b5cf6;
-    top:-100px;
-    left:-100px;
-}
-
-.blur2{
-    width:350px;
-    height:350px;
-    background:#3b82f6;
-    bottom:-100px;
-    right:-100px;
-}
-
-.container{
+.app{
     width:100%;
-    max-width:1200px;
+    max-width:950px;
     background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(30px);
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:35px;
-    padding:30px;
-    position:relative;
-    z-index:2;
-    box-shadow:
-    0 10px 40px rgba(0,0,0,0.4),
-    inset 0 1px 1px rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);
+    border-radius:22px;
+    padding:14px;
+    border:1px solid rgba(255,255,255,0.1);
 }
 
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-}
-
-.logo{
+.title{
+    text-align:center;
     color:white;
-    font-size:34px;
-    font-weight:700;
-    letter-spacing:1px;
+    font-size:18px;
+    margin-bottom:10px;
 }
 
-.pro-badge{
-    background:linear-gradient(135deg,#facc15,#f59e0b);
-    color:#111827;
-    padding:10px 18px;
-    border-radius:999px;
-    font-weight:700;
-    font-size:14px;
-    box-shadow:0 5px 15px rgba(245,158,11,0.5);
+.top{
+    display:flex;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+select{
+    flex:1;
+    height:38px;
+    border:none;
+    border-radius:10px;
+    background:#111827;
+    color:white;
+    padding:5px;
+}
+
+.swap{
+    width:38px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#8b5cf6,#2563eb);
+    color:white;
+    cursor:pointer;
 }
 
 .translator{
-    display:grid;
-    grid-template-columns:1fr 90px 1fr;
-    gap:20px;
+    display:flex;
+    gap:10px;
 }
 
-.panel{
-    background:rgba(255,255,255,0.06);
-    border-radius:30px;
-    padding:20px;
-    border:1px solid rgba(255,255,255,0.08);
-}
-
-.select{
-    width:100%;
-    background:#0f172a;
-    color:white;
-    border:none;
-    padding:16px;
-    border-radius:18px;
-    font-size:15px;
-    margin-bottom:18px;
-    outline:none;
+.box{
+    flex:1;
+    background:#020617;
+    border-radius:16px;
+    padding:10px;
 }
 
 textarea{
     width:100%;
-    height:280px;
-    background:#020617;
+    height:200px;
+    background:transparent;
     border:none;
     outline:none;
-    resize:none;
-    border-radius:25px;
-    padding:20px;
     color:white;
-    font-size:17px;
-    line-height:1.5;
-}
-
-textarea::placeholder{
-    color:#94a3b8;
-}
-
-.controls{
-    display:flex;
-    gap:12px;
-    margin-top:18px;
-}
-
-.btn{
-    flex:1;
-    border:none;
-    padding:15px;
-    border-radius:20px;
-    color:white;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    border:1px solid rgba(255,255,255,0.08);
-}
-
-.btn:hover{
-    transform:translateY(-3px);
-    background:rgba(255,255,255,0.14);
-}
-
-.swap{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.swap button{
-    width:75px;
-    height:75px;
-    border-radius:50%;
-    border:none;
-    font-size:28px;
-    color:white;
-    cursor:pointer;
-    transition:0.4s;
-    background:
-    linear-gradient(135deg,#8b5cf6,#2563eb);
-    box-shadow:
-    0 10px 25px rgba(99,102,241,0.5);
-}
-
-.swap button:hover{
-    transform:rotate(180deg) scale(1.08);
-}
-
-.translate-btn{
-    width:100%;
-    margin-top:25px;
-    border:none;
-    padding:20px;
-    border-radius:24px;
-    color:white;
-    font-size:18px;
-    font-weight:700;
-    cursor:pointer;
-    transition:0.3s;
-    background:
-    linear-gradient(135deg,#8b5cf6,#2563eb);
-    box-shadow:
-    0 10px 30px rgba(99,102,241,0.4);
-}
-
-.translate-btn:hover{
-    transform:scale(1.02);
-}
-
-.footer{
-    text-align:center;
-    margin-top:18px;
-    color:#cbd5e1;
     font-size:14px;
+    resize:none;
 }
 
-@media(max-width:950px){
+.actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:6px;
+    margin-top:6px;
+}
 
-    .translator{
-        grid-template-columns:1fr;
-    }
+.icon{
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    cursor:pointer;
+}
 
-    .swap{
-        transform:rotate(90deg);
-    }
-
+.icon:hover{
+    background:rgba(255,255,255,0.2);
 }
 
 </style>
@@ -231,283 +116,144 @@ textarea::placeholder{
 
 <body>
 
-<div class="blur1"></div>
-<div class="blur2"></div>
+<div class="app">
 
-<div class="container">
+<div class="title">⚡ Fast Translate AI</div>
 
-    <div class="header">
-        <div class="logo"> iTranslate Pro</div>
-        <div class="pro-badge">PREMIUM AI</div>
-    </div>
+<div class="top">
 
-    <div class="translator">
+<select id="fromLang"></select>
 
-        <!-- LEFT -->
-        <div class="panel">
+<button class="swap" onclick="swapLang()">⇄</button>
 
-            <select id="fromLang" class="select"></select>
+<select id="toLang"></select>
 
-            <textarea
-            id="inputText"
-            placeholder="Matn kiriting..."></textarea>
+</div>
 
-            <div class="controls">
+<div class="translator">
 
-                <button
-                class="btn"
-                onclick="copyText('inputText')">
-                📋 Nusxalash
-                </button>
+<!-- LEFT -->
+<div class="box">
 
-                <button
-                class="btn"
-                onclick="speakText('inputText','fromLang')">
-                🔊 Ovoz
-                </button>
+<textarea id="inputText" placeholder="Type..."></textarea>
 
-            </div>
+<div class="actions">
+<button class="icon" onclick="copyText('inputText')">📋</button>
+<button class="icon" onclick="speakFast('inputText','fromLang')">🔊</button>
+</div>
 
-        </div>
+</div>
 
-        <!-- SWAP -->
-        <div class="swap">
-            <button onclick="swapLanguages()">⇄</button>
-        </div>
+<!-- RIGHT -->
+<div class="box">
 
-        <!-- RIGHT -->
-        <div class="panel">
+<textarea id="outputText" readonly placeholder="Translation..."></textarea>
 
-            <select id="toLang" class="select"></select>
+<div class="actions">
+<button class="icon" onclick="copyText('outputText')">📋</button>
+<button class="icon" onclick="speakFast('outputText','toLang')">🔊</button>
+</div>
 
-            <textarea
-            id="outputText"
-            placeholder="Tarjima..."
-            readonly></textarea>
+</div>
 
-            <div class="controls">
-
-                <button
-                class="btn"
-                onclick="copyText('outputText')">
-                📋 Nusxalash
-                </button>
-
-                <button
-                class="btn"
-                onclick="speakText('outputText','toLang')">
-                🔊 Ovoz
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <button
-    class="translate-btn"
-    onclick="translateText()">
-    ⚡ Instant Translate
-    </button>
-
-    <div class="footer">
-        127+ tillar • AI Speed • Premium UI
-    </div>
+</div>
 
 </div>
 
 <script>
 
-const languages = {
-
-"af":"Afrikaans",
-"sq":"Albanian",
-"am":"Amharic",
-"ar":"Arabic",
-"hy":"Armenian",
-"az":"Azerbaijani",
-"bn":"Bengali",
-"bg":"Bulgarian",
-"ca":"Catalan",
-"zh":"Chinese",
-"hr":"Croatian",
-"cs":"Czech",
-"da":"Danish",
-"nl":"Dutch",
-"en":"English",
-"et":"Estonian",
-"fi":"Finnish",
-"fr":"French",
-"de":"German",
-"el":"Greek",
-"gu":"Gujarati",
-"he":"Hebrew",
-"hi":"Hindi",
-"hu":"Hungarian",
-"id":"Indonesian",
-"it":"Italian",
-"ja":"Japanese",
-"ko":"Korean",
-"ky":"Kyrgyz",
-"la":"Latin",
-"lv":"Latvian",
-"lt":"Lithuanian",
-"ms":"Malay",
-"mn":"Mongolian",
-"ne":"Nepali",
-"no":"Norwegian",
-"fa":"Persian",
-"pl":"Polish",
-"pt":"Portuguese",
-"pa":"Punjabi",
-"ro":"Romanian",
-"ru":"Russian",
-"sr":"Serbian",
-"sk":"Slovak",
-"es":"Spanish",
-"sw":"Swahili",
-"sv":"Swedish",
-"tg":"Tajik",
-"ta":"Tamil",
-"te":"Telugu",
-"th":"Thai",
-"tr":"Turkish",
-"tk":"Turkmen",
-"uk":"Ukrainian",
-"ur":"Urdu",
-"uz":"Uzbek",
-"vi":"Vietnamese"
+const langs = {
+"uz":"Uzbek","en":"English","ru":"Russian","tr":"Turkish",
+"ja":"Japanese","ko":"Korean","fr":"French","de":"German",
+"es":"Spanish","ar":"Arabic","hi":"Hindi","zh":"Chinese"
 };
 
-const fromLang =
-document.getElementById("fromLang");
+const fromLang = document.getElementById("fromLang");
+const toLang = document.getElementById("toLang");
+const inputText = document.getElementById("inputText");
+const outputText = document.getElementById("outputText");
 
-const toLang =
-document.getElementById("toLang");
-
-for(let code in languages){
-
-    let option1 =
-    document.createElement("option");
-
-    option1.value = code;
-
-    option1.innerText =
-    languages[code];
-
-    fromLang.appendChild(option1);
-
-    let option2 =
-    document.createElement("option");
-
-    option2.value = code;
-
-    option2.innerText =
-    languages[code];
-
-    toLang.appendChild(option2);
+for(let i in langs){
+    fromLang.innerHTML += `<option value="${i}">${langs[i]}</option>`;
+    toLang.innerHTML += `<option value="${i}">${langs[i]}</option>`;
 }
 
 fromLang.value = "uz";
 toLang.value = "en";
 
+let timer;
+
+// ⚡ FAST AUTO TRANSLATE
 async function translateText(){
 
-    const text =
-    document.getElementById("inputText")
-    .value.trim();
-
+    const text = inputText.value.trim();
     if(!text){
-        alert("Matn kiriting!");
+        outputText.value = "";
         return;
     }
-
-    const output =
-    document.getElementById("outputText");
-
-    output.value = "Tarjima qilinmoqda...";
 
     try{
 
         const url =
 `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang.value}&tl=${toLang.value}&dt=t&q=${encodeURIComponent(text)}`;
 
-        const response =
-        await fetch(url);
+        const res = await fetch(url);
+        const data = await res.json();
 
-        const data =
-        await response.json();
+        outputText.value = data[0].map(x => x[0]).join("");
 
-        output.value =
-        data[0]
-        .map(item => item[0])
-        .join("");
-
-    }catch(error){
-
-        output.value =
-        "Xatolik yuz berdi!";
-
-        console.log(error);
+    }catch{
+        outputText.value = "Error";
     }
 }
 
-function copyText(id){
+// typing speed optimized
+inputText.addEventListener("input", ()=>{
 
-    const text =
-    document.getElementById(id);
+    clearTimeout(timer);
 
-    navigator.clipboard
-    .writeText(text.value);
+    timer = setTimeout(()=>{
+        translateText();
+    },200); // 🔥 faster
 
-    alert("Matn nusxalandi!");
+});
+
+// language change auto
+fromLang.onchange = translateText;
+toLang.onchange = translateText;
+
+// swap
+function swapLang(){
+
+    let t = fromLang.value;
+    fromLang.value = toLang.value;
+    toLang.value = t;
+
+    translateText();
 }
 
-function speakText(textId,langId){
+// copy
+function copyText(id){
+    navigator.clipboard.writeText(
+        document.getElementById(id).value
+    );
+}
 
-    const text =
-    document.getElementById(textId).value;
+// 🔊 VERY FAST SPEECH (no queue lag)
+function speakFast(id,langId){
 
+    const text = document.getElementById(id).value;
     if(!text) return;
 
-    const lang =
-    document.getElementById(langId).value;
+    // stop previous speech instantly
+    speechSynthesis.cancel();
 
-    const speech =
-    new SpeechSynthesisUtterance(text);
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = document.getElementById(langId).value;
+    speech.rate = 1.2; // 🔥 faster voice
+    speech.pitch = 1;
 
-    speech.lang = lang;
-
-    speech.rate = 1;
-
-    window.speechSynthesis.speak(speech);
-}
-
-function swapLanguages(){
-
-    let temp =
-    fromLang.value;
-
-    fromLang.value =
-    toLang.value;
-
-    toLang.value =
-    temp;
-
-    let text1 =
-    document.getElementById("inputText")
-    .value;
-
-    let text2 =
-    document.getElementById("outputText")
-    .value;
-
-    document.getElementById("inputText")
-    .value = text2;
-
-    document.getElementById("outputText")
-    .value = text1;
+    speechSynthesis.speak(speech);
 }
 
 </script>
