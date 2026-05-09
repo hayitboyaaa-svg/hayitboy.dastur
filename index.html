@@ -1,236 +1,449 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KINOMEDIA | Professional Production</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Plus+Jakarta+Sans:wght@300;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --gold: #d4af37;
-            --neon: #00d2ff;
-            --bg: #050505;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ultra Translator</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        body {
-            background-color: var(--bg);
-            color: #fff;
-            overflow-x: hidden;
-            perspective: 1000px;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
 
-        /* --- 1. ASOSIY REKLAMA BANNERI (Hero) --- */
-        .main-banner {
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=2070') center/cover;
-            position: relative;
-            border-bottom: 2px solid var(--gold);
-        }
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f172a,#1e1b4b,#111827);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    overflow:hidden;
+}
 
-        .banner-box {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 60px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 40px;
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.1);
-            transform: rotateX(5deg);
-        }
+body::before{
+    content:"";
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:rgba(139,92,246,0.25);
+    filter:blur(120px);
+    border-radius:50%;
+    top:-200px;
+    left:-100px;
+}
 
-        .banner-box h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 8vw, 4rem);
-            color: var(--gold);
-            letter-spacing: 5px;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-        }
+body::after{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:rgba(59,130,246,0.2);
+    filter:blur(120px);
+    border-radius:50%;
+    bottom:-200px;
+    right:-100px;
+}
 
-        /* --- 2. KINOLAR GALEREYASI (3D Cards) --- */
-        .container { padding: 80px 10%; }
-        
-        .section-label {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--gold);
-            text-align: center;
-            margin-bottom: 50px;
-            letter-spacing: 10px;
-            font-size: 1.5rem;
-        }
+.container{
+    width:100%;
+    max-width:1200px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:30px;
+    padding:30px;
+    position:relative;
+    z-index:10;
+    box-shadow:0 0 40px rgba(0,0,0,0.4);
+}
 
-        .movie-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 50px;
-        }
+.title{
+    text-align:center;
+    color:white;
+    font-size:38px;
+    font-weight:700;
+    margin-bottom:30px;
+}
 
-        .movie-card {
-            position: relative;
-            height: 500px;
-            border-radius: 25px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+.translator-box{
+    display:grid;
+    grid-template-columns:1fr 80px 1fr;
+    gap:20px;
+}
 
-        .movie-card:hover {
-            transform: translateY(-20px) rotateY(10deg) rotateX(5deg);
-            box-shadow: -20px 20px 50px rgba(0, 210, 255, 0.2);
-            border-color: var(--neon);
-        }
+.panel{
+    background:rgba(255,255,255,0.06);
+    border-radius:25px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,0.08);
+}
 
-        .movie-card img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: 0.5s;
-        }
+.select-box{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:#111827;
+    color:white;
+    font-size:15px;
+    outline:none;
+    margin-bottom:20px;
+}
 
-        .card-overlay {
-            position: absolute;
-            bottom: 0; width: 100%; height: 50%;
-            background: linear-gradient(transparent, #000);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 30px;
-        }
+textarea{
+    width:100%;
+    height:260px;
+    resize:none;
+    border:none;
+    outline:none;
+    border-radius:20px;
+    padding:20px;
+    background:#0f172a;
+    color:white;
+    font-size:17px;
+}
 
-        /* --- 3. HAMKORLIK BANNERI --- */
-        .collab-banner {
-            margin: 100px 10%;
-            padding: 80px;
-            background: linear-gradient(45deg, #111, #000);
-            border-radius: 30px;
-            border: 1px solid var(--gold);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
-        }
+.controls{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+    gap:10px;
+}
 
-        .collab-text h2 { font-family: 'Orbitron'; font-size: 2rem; color: var(--gold); }
+.btn{
+    flex:1;
+    border:none;
+    padding:14px;
+    border-radius:16px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    color:white;
+    transition:0.3s;
+    background:linear-gradient(135deg,#7c3aed,#2563eb);
+}
 
-        .btn-call {
-            padding: 20px 50px;
-            background: var(--gold);
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
+.btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
 
-        .btn-call:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--gold); }
+.swap{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-        /* --- Video Player --- */
-        .player-modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            display: none; z-index: 2000; justify-content: center; align-items: center;
-        }
-        .player-modal.active { display: flex; }
-        .video-box { width: 90%; max-width: 1000px; position: relative; }
-        .close { position: absolute; top: -50px; right: 0; color: #fff; font-size: 2rem; cursor: pointer; }
+.swap button{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    background:linear-gradient(135deg,#8b5cf6,#3b82f6);
+    color:white;
+    font-size:26px;
+    transition:0.3s;
+}
 
-        footer { text-align: center; padding: 50px; opacity: 0.4; font-size: 0.8rem; }
+.swap button:hover{
+    transform:rotate(180deg) scale(1.1);
+}
 
-        @media (max-width: 768px) {
-            .movie-grid { grid-template-columns: 1fr; }
-            .collab-banner { flex-direction: column; text-align: center; gap: 30px; padding: 40px; }
-        }
-    </style>
+.translate-btn{
+    width:100%;
+    margin-top:25px;
+    padding:18px;
+    border:none;
+    border-radius:20px;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(135deg,#9333ea,#2563eb);
+    transition:0.3s;
+}
+
+.translate-btn:hover{
+    transform:scale(1.02);
+    box-shadow:0 10px 30px rgba(124,58,237,0.5);
+}
+
+.footer{
+    text-align:center;
+    color:#cbd5e1;
+    margin-top:20px;
+    font-size:14px;
+}
+
+@media(max-width:900px){
+    .translator-box{
+        grid-template-columns:1fr;
+    }
+
+    .swap{
+        transform:rotate(90deg);
+    }
+}
+</style>
 </head>
 <body>
 
-    <!-- REKLAMA BANNERI -->
-    <section class="main-banner">
-        <div class="banner-box">
-            <p style="letter-spacing: 5px; color: var(--neon); font-weight: 300;">NEXT LEVEL PRODUCTION</p>
-            <h1>PREMIUM CINEMA</h1>
-            <p style="margin-top: 15px; opacity: 0.7;">Sizning g'oyangiz - bizning kinematografik ijromiz</p>
-        </div>
-    </section>
+<div class="container">
 
-    <!-- KINOLAR -->
-    <section class="container">
-        <h2 class="section-label">SELECTED WORKS</h2>
-        <div class="movie-grid">
-            
-            <div class="movie-card" onclick="openVideo('https://player.vimeo.com/external/494298150.sd.mp4?s=4042894191636c7a10dfa6c7e2d93e1f0e4b868f&profile_id=139')">
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800" alt="Work">
-                <div class="card-overlay">
-                    <h3 style="font-family: 'Orbitron'; font-size: 1.5rem;">QAL'A JANGI</h3>
-                    <p style="color: var(--neon);">ACTION DRAMA / 2026</p>
-                </div>
+    <div class="title">🌍 Ultra Translator AI</div>
+
+    <div class="translator-box">
+
+        <!-- LEFT -->
+        <div class="panel">
+            <select class="select-box" id="fromLang"></select>
+
+            <textarea id="inputText" placeholder="Matn kiriting..."></textarea>
+
+            <div class="controls">
+                <button class="btn" onclick="copyText('inputText')">
+                    📋 Nusxalash
+                </button>
+
+                <button class="btn" onclick="speakText('inputText','fromLang')">
+                    🔊 Ovoz
+                </button>
             </div>
+        </div>
 
-            <div class="movie-card" onclick="openVideo('https://player.vimeo.com/external/459389137.sd.mp4?s=89417f2d5797cd1300e54ae3588a80397737d920&profile_id=139')">
-                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800" alt="Work">
-                <div class="card-overlay">
-                    <h3 style="font-family: 'Orbitron'; font-size: 1.5rem;">SAHRO SIRI</h3>
-                    <p style="color: var(--neon);">CINEMATIC ART</p>
-                </div>
+        <!-- SWAP -->
+        <div class="swap">
+            <button onclick="swapLanguages()">⇄</button>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="panel">
+            <select class="select-box" id="toLang"></select>
+
+            <textarea id="outputText" placeholder="Tarjima..." readonly></textarea>
+
+            <div class="controls">
+                <button class="btn" onclick="copyText('outputText')">
+                    📋 Nusxalash
+                </button>
+
+                <button class="btn" onclick="speakText('outputText','toLang')">
+                    🔊 Ovoz
+                </button>
             </div>
-
         </div>
-    </section>
 
-    <!-- HAMKORLIK BANNERI -->
-    <section class="collab-banner">
-        <div class="collab-text">
-            <h2>LOYIHAINGIZNI <br> BIZ BILAN BOSHLANG</h2>
-            <p style="margin-top: 10px; color: #888;">Professional reklama va kliplar uchun maxsus takliflar.</p>
-        </div>
-        <button class="btn-call" onclick="window.location.href='tel:+998901234567'">HAMKORLIK</button>
-    </section>
-
-    <!-- PLAYER -->
-    <div class="player-modal" id="pModal">
-        <div class="video-box">
-            <span class="close" onclick="closeVideo()">✕</span>
-            <video id="vPlayer" controls style="width: 100%; border-radius: 20px; box-shadow: 0 0 50px var(--neon);">
-                <source src="" type="video/mp4">
-            </video>
-        </div>
     </div>
 
-    <footer>
-        &copy; 2026 KINOMEDIA | UNCOMPROMISED QUALITY
-    </footer>
+    <button class="translate-btn" onclick="translateText()">
+        ⚡ Tarjima Qilish
+    </button>
 
-    <script>
-        const modal = document.getElementById('pModal');
-        const video = document.getElementById('vPlayer');
+    <div class="footer">
+        127+ tillik professional translator
+    </div>
 
-        function openVideo(src) {
-            video.src = src;
-            modal.classList.add('active');
-            video.play();
-            document.body.style.overflow = 'hidden';
-        }
+</div>
 
-        function closeVideo() {
-            modal.classList.remove('active');
-            video.pause();
-            video.src = "";
-            document.body.style.overflow = 'auto';
-        }
+<script>
 
-        modal.onclick = function(e) {
-            if(e.target === modal) closeVideo();
-        }
-    </script>
+const languages = {
+    "af":"Afrikaans",
+    "sq":"Albanian",
+    "am":"Amharic",
+    "ar":"Arabic",
+    "hy":"Armenian",
+    "az":"Azerbaijani",
+    "eu":"Basque",
+    "be":"Belarusian",
+    "bn":"Bengali",
+    "bs":"Bosnian",
+    "bg":"Bulgarian",
+    "ca":"Catalan",
+    "ceb":"Cebuano",
+    "ny":"Chichewa",
+    "zh":"Chinese",
+    "co":"Corsican",
+    "hr":"Croatian",
+    "cs":"Czech",
+    "da":"Danish",
+    "nl":"Dutch",
+    "en":"English",
+    "eo":"Esperanto",
+    "et":"Estonian",
+    "tl":"Filipino",
+    "fi":"Finnish",
+    "fr":"French",
+    "fy":"Frisian",
+    "gl":"Galician",
+    "ka":"Georgian",
+    "de":"German",
+    "el":"Greek",
+    "gu":"Gujarati",
+    "ht":"Haitian Creole",
+    "ha":"Hausa",
+    "haw":"Hawaiian",
+    "he":"Hebrew",
+    "hi":"Hindi",
+    "hmn":"Hmong",
+    "hu":"Hungarian",
+    "is":"Icelandic",
+    "ig":"Igbo",
+    "id":"Indonesian",
+    "ga":"Irish",
+    "it":"Italian",
+    "ja":"Japanese",
+    "jw":"Javanese",
+    "kn":"Kannada",
+    "kk":"Kazakh",
+    "km":"Khmer",
+    "ko":"Korean",
+    "ku":"Kurdish",
+    "ky":"Kyrgyz",
+    "lo":"Lao",
+    "la":"Latin",
+    "lv":"Latvian",
+    "lt":"Lithuanian",
+    "lb":"Luxembourgish",
+    "mk":"Macedonian",
+    "mg":"Malagasy",
+    "ms":"Malay",
+    "ml":"Malayalam",
+    "mt":"Maltese",
+    "mi":"Maori",
+    "mr":"Marathi",
+    "mn":"Mongolian",
+    "my":"Myanmar",
+    "ne":"Nepali",
+    "no":"Norwegian",
+    "or":"Odia",
+    "ps":"Pashto",
+    "fa":"Persian",
+    "pl":"Polish",
+    "pt":"Portuguese",
+    "pa":"Punjabi",
+    "ro":"Romanian",
+    "ru":"Russian",
+    "sm":"Samoan",
+    "gd":"Scots Gaelic",
+    "sr":"Serbian",
+    "st":"Sesotho",
+    "sn":"Shona",
+    "sd":"Sindhi",
+    "si":"Sinhala",
+    "sk":"Slovak",
+    "sl":"Slovenian",
+    "so":"Somali",
+    "es":"Spanish",
+    "su":"Sundanese",
+    "sw":"Swahili",
+    "sv":"Swedish",
+    "tg":"Tajik",
+    "ta":"Tamil",
+    "tt":"Tatar",
+    "te":"Telugu",
+    "th":"Thai",
+    "tr":"Turkish",
+    "tk":"Turkmen",
+    "uk":"Ukrainian",
+    "ur":"Urdu",
+    "ug":"Uyghur",
+    "uz":"Uzbek",
+    "vi":"Vietnamese",
+    "cy":"Welsh",
+    "xh":"Xhosa",
+    "yi":"Yiddish",
+    "yo":"Yoruba",
+    "zu":"Zulu"
+};
+
+const fromLang = document.getElementById("fromLang");
+const toLang = document.getElementById("toLang");
+
+for(let code in languages){
+
+    let option1 = document.createElement("option");
+    option1.value = code;
+    option1.innerText = languages[code];
+    fromLang.appendChild(option1);
+
+    let option2 = document.createElement("option");
+    option2.value = code;
+    option2.innerText = languages[code];
+    toLang.appendChild(option2);
+}
+
+fromLang.value = "uz";
+toLang.value = "en";
+
+async function translateText(){
+
+    const text = document.getElementById("inputText").value;
+
+    if(!text) return;
+
+    const url =
+    `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang.value}|${toLang.value}`;
+
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+    document.getElementById("outputText").value =
+    data.responseData.translatedText;
+}
+
+function copyText(id){
+
+    const text = document.getElementById(id);
+
+    navigator.clipboard.writeText(text.value);
+
+    alert("Matn nusxalandi!");
+}
+
+function speakText(textId,langId){
+
+    const text = document.getElementById(textId).value;
+
+    const lang = document.getElementById(langId).value;
+
+    const speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = lang;
+
+    speech.rate = 1;
+
+    speech.pitch = 1;
+
+    speech.volume = 1;
+
+    window.speechSynthesis.speak(speech);
+}
+
+function swapLanguages(){
+
+    let tempLang = fromLang.value;
+    fromLang.value = toLang.value;
+    toLang.value = tempLang;
+
+    let tempText =
+    document.getElementById("inputText").value;
+
+    document.getElementById("inputText").value =
+    document.getElementById("outputText").value;
+
+    document.getElementById("outputText").value =
+    tempText;
+}
+
+</script>
+
 </body>
 </html>
-
