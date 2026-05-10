@@ -3,112 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fast Translate AI</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Checkers PRO</title>
 
 <style>
 
-*{
+body{
     margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Poppins,sans-serif;
+    overflow:hidden;
+    font-family:sans-serif;
+    background:
+    radial-gradient(circle at top,#0f172a,#020617);
 }
 
-body{
-    min-height:100vh;
+/* MENU */
+#menu{
+    position:absolute;
+    inset:0;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#0f172a,#1e1b4b);
-    padding:10px;
-}
-
-.app{
-    width:100%;
-    max-width:950px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(20px);
-    border-radius:22px;
-    padding:14px;
-    border:1px solid rgba(255,255,255,0.1);
+    gap:18px;
+    background:rgba(0,0,0,.92);
+    z-index:10;
 }
 
 .title{
-    text-align:center;
     color:white;
+    font-size:42px;
+    font-weight:bold;
+    text-shadow:0 0 25px orange;
+}
+
+button{
+    padding:14px 30px;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
     font-size:18px;
-    margin-bottom:10px;
-}
-
-.top{
-    display:flex;
-    gap:8px;
-    margin-bottom:10px;
-}
-
-select{
-    flex:1;
-    height:38px;
-    border:none;
-    border-radius:10px;
-    background:#111827;
+    font-weight:bold;
     color:white;
-    padding:5px;
+    background:
+    linear-gradient(135deg,#f59e0b,#ef4444);
+    box-shadow:0 0 20px rgba(239,68,68,.4);
+    transition:.2s;
 }
 
-.swap{
-    width:38px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(135deg,#8b5cf6,#2563eb);
+button:hover{
+    transform:scale(1.05);
+}
+
+/* HUD */
+.hud{
+    position:absolute;
+    top:10px;
+    left:10px;
     color:white;
-    cursor:pointer;
+    background:rgba(255,255,255,.06);
+    padding:14px 18px;
+    border-radius:14px;
+    backdrop-filter:blur(10px);
+    line-height:1.8;
+    font-size:18px;
+    z-index:5;
 }
 
-.translator{
-    display:flex;
-    gap:10px;
-}
-
-.box{
-    flex:1;
-    background:#020617;
-    border-radius:16px;
-    padding:10px;
-}
-
-textarea{
-    width:100%;
-    height:200px;
-    background:transparent;
-    border:none;
-    outline:none;
+/* WIN */
+#win{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
     color:white;
-    font-size:14px;
-    resize:none;
+    z-index:20;
+    font-size:52px;
+    text-shadow:0 0 20px white;
+    gap:25px;
 }
 
-.actions{
-    display:flex;
-    justify-content:flex-end;
-    gap:6px;
-    margin-top:6px;
-}
-
-.icon{
-    width:34px;
-    height:34px;
-    border:none;
-    border-radius:10px;
-    background:rgba(255,255,255,0.1);
-    color:white;
-    cursor:pointer;
-}
-
-.icon:hover{
-    background:rgba(255,255,255,0.2);
+canvas{
+    display:block;
+    margin:auto;
 }
 
 </style>
@@ -116,145 +94,798 @@ textarea{
 
 <body>
 
-<div class="app">
+<!-- MENU -->
+<div id="menu">
 
-<div class="title">⚡ Fast Translate AI</div>
+    <div class="title">
+        ⚫ CHECKERS PRO ⚪
+    </div>
 
-<div class="top">
+    <!-- MAIN MENU -->
+    <div id="mainMenu"
+    style="display:flex; flex-direction:column; gap:15px;">
 
-<select id="fromLang"></select>
+        <button onclick="openColorMenu('pvp')">
+            👥 1 vs 1
+        </button>
 
-<button class="swap" onclick="swapLang()">⇄</button>
+        <button onclick="openColorMenu('ai')">
+            🤖 vs Robot
+        </button>
 
-<select id="toLang"></select>
+    </div>
+
+    <!-- COLOR MENU -->
+    <div id="colorMenu"
+    style="display:none; flex-direction:column; gap:15px;">
+
+        <h2 style="color:white">
+            Choose Color
+        </h2>
+
+        <button onclick="startGame('white')">
+            ⚪ Play White
+        </button>
+
+        <button onclick="startGame('black')">
+            ⚫ Play Black
+        </button>
+
+    </div>
+
+</div>
+
+<!-- HUD -->
+<div class="hud">
+
+    Turn:
+    <span id="turn">White</span>
+
+    <br>
+
+    ⚪ White:
+    <span id="wscore">0</span>
+
+    <br>
+
+    ⚫ Black:
+    <span id="bscore">0</span>
 
 </div>
 
-<div class="translator">
+<!-- WIN -->
+<div id="win"></div>
 
-<!-- LEFT -->
-<div class="box">
-
-<textarea id="inputText" placeholder="Type..."></textarea>
-
-<div class="actions">
-<button class="icon" onclick="copyText('inputText')">📋</button>
-<button class="icon" onclick="speakFast('inputText','fromLang')">🔊</button>
-</div>
-
-</div>
-
-<!-- RIGHT -->
-<div class="box">
-
-<textarea id="outputText" readonly placeholder="Translation..."></textarea>
-
-<div class="actions">
-<button class="icon" onclick="copyText('outputText')">📋</button>
-<button class="icon" onclick="speakFast('outputText','toLang')">🔊</button>
-</div>
-
-</div>
-
-</div>
-
-</div>
+<!-- GAME -->
+<canvas id="game"></canvas>
 
 <script>
 
-const langs = {
-"uz":"Uzbek","en":"English","ru":"Russian","tr":"Turkish",
-"ja":"Japanese","ko":"Korean","fr":"French","de":"German",
-"es":"Spanish","ar":"Arabic","hi":"Hindi","zh":"Chinese"
-};
+const canvas =
+document.getElementById("game");
 
-const fromLang = document.getElementById("fromLang");
-const toLang = document.getElementById("toLang");
-const inputText = document.getElementById("inputText");
-const outputText = document.getElementById("outputText");
+const ctx =
+canvas.getContext("2d");
 
-for(let i in langs){
-    fromLang.innerHTML += `<option value="${i}">${langs[i]}</option>`;
-    toLang.innerHTML += `<option value="${i}">${langs[i]}</option>`;
+let size =
+Math.min(innerWidth,innerHeight)*0.9;
+
+canvas.width = size;
+canvas.height = size;
+
+const TILE = size/8;
+
+let board = [];
+let selected = null;
+
+let turn = "white";
+let mode = "pvp";
+let playerColor = "white";
+
+let wScore = 0;
+let bScore = 0;
+
+let gameOver = false;
+
+// INIT
+function init(){
+
+    board = [];
+
+    wScore = 0;
+    bScore = 0;
+
+    updateScore();
+
+    for(let y=0;y<8;y++){
+
+        for(let x=0;x<8;x++){
+
+            let piece = null;
+
+            if((x+y)%2===1){
+
+                if(y<3){
+
+                    piece = {
+                        color:"black",
+                        king:false
+                    };
+
+                }
+
+                if(y>4){
+
+                    piece = {
+                        color:"white",
+                        king:false
+                    };
+
+                }
+
+            }
+
+            board.push({
+                x,
+                y,
+                piece
+            });
+
+        }
+
+    }
+
 }
 
-fromLang.value = "uz";
-toLang.value = "en";
+// GET CELL
+function get(x,y){
 
-let timer;
+    return board.find(
+        c=>c.x===x && c.y===y
+    );
 
-// ⚡ FAST AUTO TRANSLATE
-async function translateText(){
+}
 
-    const text = inputText.value.trim();
-    if(!text){
-        outputText.value = "";
+// MENU
+function openColorMenu(m){
+
+    mode = m;
+
+    document.getElementById(
+        "mainMenu"
+    ).style.display="none";
+
+    document.getElementById(
+        "colorMenu"
+    ).style.display="flex";
+
+}
+
+// START GAME
+function startGame(color){
+
+    playerColor = color;
+
+    document.getElementById(
+        "menu"
+    ).style.display="none";
+
+    init();
+
+    // HAR DOIM OQ BIRINCHI YURADI
+    turn = "white";
+
+    document.getElementById(
+        "turn"
+    ).innerText = "White";
+
+    // AGAR PLAYER QORA TANLASA
+    // ROBOT OQDA BIRINCHI YURADI
+    if(
+        mode==="ai" &&
+        playerColor==="black"
+    ){
+
+        setTimeout(()=>{
+            aiMove();
+        },500);
+
+    }
+
+}
+
+// SCORE
+function updateScore(){
+
+    document.getElementById(
+        "wscore"
+    ).innerText = wScore;
+
+    document.getElementById(
+        "bscore"
+    ).innerText = bScore;
+
+}
+
+// MOVES
+function getMoves(cell){
+
+    let moves = [];
+
+    if(!cell.piece) return moves;
+
+    let dirs =
+    cell.piece.king
+    ?
+    [[1,1],[-1,1],[1,-1],[-1,-1]]
+    :
+    (
+        cell.piece.color==="white"
+        ?
+        [[1,-1],[-1,-1]]
+        :
+        [[1,1],[-1,1]]
+    );
+
+    dirs.forEach(d=>{
+
+        let nx = cell.x+d[0];
+        let ny = cell.y+d[1];
+
+        let jx = cell.x+d[0]*2;
+        let jy = cell.y+d[1]*2;
+
+        let n = get(nx,ny);
+        let j = get(jx,jy);
+
+        // normal move
+        if(n && !n.piece){
+
+            moves.push({
+                type:"move",
+                cell:n
+            });
+
+        }
+
+        // jump
+        if(
+            n &&
+            n.piece &&
+            n.piece.color!==cell.piece.color
+        ){
+
+            if(j && !j.piece){
+
+                moves.push({
+                    type:"jump",
+                    cell:j,
+                    kill:n
+                });
+
+            }
+
+        }
+
+    });
+
+    return moves;
+
+}
+
+// ANIMATION
+function animate(fromCell,toCell,move,callback){
+
+    let piece = fromCell.piece;
+
+    let startX = fromCell.x;
+    let startY = fromCell.y;
+
+    let endX = toCell.x;
+    let endY = toCell.y;
+
+    let t = 0;
+
+    piece.animX = startX;
+    piece.animY = startY;
+
+    function step(){
+
+        t += 0.042;
+
+        if(t >= 1){
+
+            piece.animX = null;
+            piece.animY = null;
+
+            movePiece(
+                fromCell,
+                toCell,
+                move
+            );
+
+            callback();
+
+            return;
+        }
+
+        piece.animX =
+        startX + (endX-startX)*t;
+
+        piece.animY =
+        startY + (endY-startY)*t;
+
+        requestAnimationFrame(step);
+
+    }
+
+    step();
+
+}
+
+// MOVE
+function movePiece(from,to,move){
+
+    to.piece = from.piece;
+
+    from.piece = null;
+
+    // capture
+    if(move.type==="jump"){
+
+        move.kill.piece = null;
+
+        if(to.piece.color==="white"){
+
+            wScore++;
+
+        }else{
+
+            bScore++;
+
+        }
+
+        updateScore();
+
+    }
+
+    // king
+    if(
+        to.y===0 &&
+        to.piece.color==="white"
+    ){
+
+        to.piece.king=true;
+
+    }
+
+    if(
+        to.y===7 &&
+        to.piece.color==="black"
+    ){
+
+        to.piece.king=true;
+
+    }
+
+}
+
+// WIN
+function checkWin(){
+
+    let white =
+    board.filter(c=>
+        c.piece &&
+        c.piece.color==="white"
+    ).length;
+
+    let black =
+    board.filter(c=>
+        c.piece &&
+        c.piece.color==="black"
+    ).length;
+
+    if(white===0){
+
+        showWin(
+            "⚫ BLACK WINS!"
+        );
+
+    }
+
+    if(black===0){
+
+        showWin(
+            "⚪ WHITE WINS!"
+        );
+
+    }
+
+}
+
+// SHOW WIN
+function showWin(text){
+
+    gameOver = true;
+
+    let win =
+    document.getElementById("win");
+
+    win.style.display="flex";
+
+    win.innerHTML = `
+        <div>${text}</div>
+
+        <button onclick="location.reload()">
+            🔄 Restart
+        </button>
+    `;
+
+}
+
+// DRAW
+function draw(){
+
+    // BOARD
+    for(let y=0;y<8;y++){
+
+        for(let x=0;x<8;x++){
+
+            ctx.fillStyle =
+            (x+y)%2
+            ?
+            "#7c2d12"
+            :
+            "#fbbf24";
+
+            ctx.fillRect(
+                x*TILE,
+                y*TILE,
+                TILE,
+                TILE
+            );
+
+        }
+
+    }
+
+    // MOVE HIGHLIGHT
+    if(selected){
+
+        getMoves(selected).forEach(m=>{
+
+            ctx.fillStyle =
+            "rgba(0,255,0,.3)";
+
+            ctx.fillRect(
+                m.cell.x*TILE,
+                m.cell.y*TILE,
+                TILE,
+                TILE
+            );
+
+        });
+
+    }
+
+    // PIECES
+    board.forEach(c=>{
+
+        if(!c.piece) return;
+
+        let px =
+        (c.piece.animX ?? c.x)
+        *TILE + TILE/2;
+
+        let py =
+        (c.piece.animY ?? c.y)
+        *TILE + TILE/2;
+
+        // shadow
+        ctx.beginPath();
+
+        ctx.fillStyle =
+        "rgba(0,0,0,.35)";
+
+        ctx.arc(
+            px+3,
+            py+5,
+            TILE*0.34,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        // gradient
+        let grad =
+        ctx.createRadialGradient(
+            px-5,
+            py-5,
+            5,
+            px,
+            py,
+            40
+        );
+
+        if(c.piece.color==="white"){
+
+            grad.addColorStop(0,"#fff");
+            grad.addColorStop(1,"#bbb");
+
+        }else{
+
+            grad.addColorStop(0,"#444");
+            grad.addColorStop(1,"#000");
+
+        }
+
+        ctx.beginPath();
+
+        ctx.fillStyle = grad;
+
+        ctx.shadowBlur = 18;
+
+        ctx.shadowColor =
+        c.piece.color==="white"
+        ?
+        "#fff"
+        :
+        "#000";
+
+        ctx.arc(
+            px,
+            py,
+            TILE*0.34,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+        // shine
+        ctx.beginPath();
+
+        ctx.fillStyle =
+        "rgba(255,255,255,.25)";
+
+        ctx.arc(
+            px-6,
+            py-6,
+            TILE*0.1,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fill();
+
+        // king
+        if(c.piece.king){
+
+            ctx.font="20px Arial";
+
+            ctx.fillText(
+                "👑",
+                px-10,
+                py+7
+            );
+
+        }
+
+    });
+
+}
+
+// CLICK
+canvas.addEventListener("click",(e)=>{
+
+    if(gameOver) return;
+
+    // AI rejimida faqat player navbatida yuradi
+    if(
+        mode==="ai" &&
+        turn!==playerColor
+    ){
         return;
     }
 
-    try{
+    let rect =
+    canvas.getBoundingClientRect();
 
-        const url =
-`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang.value}&tl=${toLang.value}&dt=t&q=${encodeURIComponent(text)}`;
+    let x = Math.floor(
+        (e.clientX-rect.left)/TILE
+    );
 
-        const res = await fetch(url);
-        const data = await res.json();
+    let y = Math.floor(
+        (e.clientY-rect.top)/TILE
+    );
 
-        outputText.value = data[0].map(x => x[0]).join("");
+    let cell = get(x,y);
 
-    }catch{
-        outputText.value = "Error";
+    // MOVE
+    if(selected){
+
+        let moves =
+        getMoves(selected);
+
+        let move =
+        moves.find(
+            m=>m.cell===cell
+        );
+
+        if(move){
+
+            animate(
+                selected,
+                cell,
+                move,
+                ()=>{
+
+                    selected = null;
+
+                    turn =
+                    turn==="white"
+                    ?
+                    "black"
+                    :
+                    "white";
+
+                    document.getElementById(
+                        "turn"
+                    ).innerText =
+                    turn.charAt(0).toUpperCase()
+                    + turn.slice(1);
+
+                    checkWin();
+
+                    // AI TURN
+                    if(
+                        mode==="ai" &&
+                        turn!==playerColor
+                    ){
+
+                        setTimeout(
+                            aiMove,
+                            500
+                        );
+
+                    }
+
+                }
+            );
+
+        }else{
+
+            selected = null;
+
+        }
+
+    }else if(
+
+        cell &&
+        cell.piece &&
+        cell.piece.color===turn &&
+
+        (
+            mode==="pvp" ||
+            cell.piece.color===playerColor
+        )
+
+    ){
+
+        selected = cell;
+
     }
-}
-
-// typing speed optimized
-inputText.addEventListener("input", ()=>{
-
-    clearTimeout(timer);
-
-    timer = setTimeout(()=>{
-        translateText();
-    },200); // 🔥 faster
 
 });
 
-// language change auto
-fromLang.onchange = translateText;
-toLang.onchange = translateText;
+// AI
+function aiMove(){
 
-// swap
-function swapLang(){
+    if(gameOver) return;
 
-    let t = fromLang.value;
-    fromLang.value = toLang.value;
-    toLang.value = t;
+    let aiColor =
+    playerColor==="white"
+    ?
+    "black"
+    :
+    "white";
 
-    translateText();
-}
-
-// copy
-function copyText(id){
-    navigator.clipboard.writeText(
-        document.getElementById(id).value
+    let pieces =
+    board.filter(c=>
+        c.piece &&
+        c.piece.color===aiColor
     );
+
+    let all = [];
+
+    pieces.forEach(p=>{
+
+        getMoves(p).forEach(m=>{
+
+            all.push({
+                p,
+                m
+            });
+
+        });
+
+    });
+
+    if(all.length===0){
+
+        showWin(
+            playerColor==="white"
+            ?
+            "⚪ WHITE WINS!"
+            :
+            "⚫ BLACK WINS!"
+        );
+
+        return;
+
+    }
+
+    let jumps =
+    all.filter(
+        a=>a.m.type==="jump"
+    );
+
+    let chosen =
+    (jumps.length?jumps:all)
+    [
+        Math.floor(
+            Math.random()*
+            (
+                jumps.length
+                ?
+                jumps.length
+                :
+                all.length
+            )
+        )
+    ];
+
+    animate(
+        chosen.p,
+        chosen.m.cell,
+        chosen.m,
+        ()=>{
+
+            turn = playerColor;
+
+            document.getElementById(
+                "turn"
+            ).innerText =
+            turn.charAt(0).toUpperCase()
+            + turn.slice(1);
+
+            checkWin();
+
+        }
+    );
+
 }
 
-// 🔊 VERY FAST SPEECH (no queue lag)
-function speakFast(id,langId){
+// LOOP
+function loop(){
 
-    const text = document.getElementById(id).value;
-    if(!text) return;
+    ctx.clearRect(
+        0,
+        0,
+        size,
+        size
+    );
 
-    // stop previous speech instantly
-    speechSynthesis.cancel();
+    draw();
 
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = document.getElementById(langId).value;
-    speech.rate = 1.2; // 🔥 faster voice
-    speech.pitch = 1;
+    requestAnimationFrame(loop);
 
-    speechSynthesis.speak(speech);
 }
+
+loop();
 
 </script>
 
