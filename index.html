@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkers PRO</title>
+<title>Checkers PRO </title>
 
 <style>
 
@@ -12,7 +12,7 @@ body{
     overflow:hidden;
     font-family:sans-serif;
     background:
-    radial-gradient(circle at top,#0f172a,#020617);
+    radial-gradient(circle at top,#1e293b,#020617);
 }
 
 /* MENU */
@@ -84,9 +84,13 @@ button:hover{
     gap:25px;
 }
 
+/* 4K CANVAS */
 canvas{
     display:block;
     margin:auto;
+    image-rendering:auto;
+    filter:
+    drop-shadow(0 0 40px rgba(255,140,0,.25));
 }
 
 </style>
@@ -167,11 +171,23 @@ document.getElementById("game");
 const ctx =
 canvas.getContext("2d");
 
+/* 4K + HIGH FPS */
+const DPR =
+Math.min(
+window.devicePixelRatio || 1,
+2
+);
+
 let size =
 Math.min(innerWidth,innerHeight)*0.9;
 
-canvas.width = size;
-canvas.height = size;
+canvas.width = size * DPR;
+canvas.height = size * DPR;
+
+canvas.style.width = size + "px";
+canvas.style.height = size + "px";
+
+ctx.scale(DPR,DPR);
 
 const TILE = size/8;
 
@@ -272,15 +288,14 @@ function startGame(color){
 
     init();
 
-    // HAR DOIM OQ BIRINCHI YURADI
+    // WHITE ALWAYS FIRST
     turn = "white";
 
     document.getElementById(
         "turn"
     ).innerText = "White";
 
-    // AGAR PLAYER QORA TANLASA
-    // ROBOT OQDA BIRINCHI YURADI
+    // PLAYER BLACK => AI WHITE FIRST
     if(
         mode==="ai" &&
         playerColor==="black"
@@ -338,7 +353,6 @@ function getMoves(cell){
         let n = get(nx,ny);
         let j = get(jx,jy);
 
-        // normal move
         if(n && !n.piece){
 
             moves.push({
@@ -348,7 +362,6 @@ function getMoves(cell){
 
         }
 
-        // jump
         if(
             n &&
             n.piece &&
@@ -430,7 +443,6 @@ function movePiece(from,to,move){
 
     from.piece = null;
 
-    // capture
     if(move.type==="jump"){
 
         move.kill.piece = null;
@@ -449,7 +461,6 @@ function movePiece(from,to,move){
 
     }
 
-    // king
     if(
         to.y===0 &&
         to.piece.color==="white"
@@ -526,21 +537,67 @@ function showWin(text){
 // DRAW
 function draw(){
 
-    // BOARD
+    // BACKGROUND
+    let bg =
+    ctx.createLinearGradient(
+        0,0,size,size
+    );
+
+    bg.addColorStop(0,"#78350f");
+    bg.addColorStop(1,"#1e293b");
+
+    ctx.fillStyle = bg;
+
+    ctx.fillRect(0,0,size,size);
+
+    // 3D BOARD
     for(let y=0;y<8;y++){
 
         for(let x=0;x<8;x++){
 
-            ctx.fillStyle =
-            (x+y)%2
-            ?
-            "#7c2d12"
-            :
-            "#fbbf24";
+            let px = x*TILE;
+            let py = y*TILE;
+
+            let dark =
+            (x+y)%2;
+
+            let grad =
+            ctx.createLinearGradient(
+                px,
+                py,
+                px+TILE,
+                py+TILE
+            );
+
+            if(dark){
+
+                grad.addColorStop(0,"#78350f");
+                grad.addColorStop(1,"#431407");
+
+            }else{
+
+                grad.addColorStop(0,"#fcd34d");
+                grad.addColorStop(1,"#f59e0b");
+
+            }
+
+            ctx.fillStyle = grad;
 
             ctx.fillRect(
-                x*TILE,
-                y*TILE,
+                px,
+                py,
+                TILE,
+                TILE
+            );
+
+            ctx.strokeStyle =
+            "rgba(255,255,255,.08)";
+
+            ctx.lineWidth = 2;
+
+            ctx.strokeRect(
+                px,
+                py,
                 TILE,
                 TILE
             );
@@ -549,20 +606,25 @@ function draw(){
 
     }
 
-    // MOVE HIGHLIGHT
+    // HIGHLIGHT
     if(selected){
 
         getMoves(selected).forEach(m=>{
 
-            ctx.fillStyle =
-            "rgba(0,255,0,.3)";
+            ctx.beginPath();
 
-            ctx.fillRect(
-                m.cell.x*TILE,
-                m.cell.y*TILE,
-                TILE,
-                TILE
+            ctx.fillStyle =
+            "rgba(0,255,120,.35)";
+
+            ctx.arc(
+                m.cell.x*TILE+TILE/2,
+                m.cell.y*TILE+TILE/2,
+                TILE*0.18,
+                0,
+                Math.PI*2
             );
+
+            ctx.fill();
 
         });
 
@@ -581,42 +643,46 @@ function draw(){
         (c.piece.animY ?? c.y)
         *TILE + TILE/2;
 
-        // shadow
+        // SHADOW
         ctx.beginPath();
 
         ctx.fillStyle =
-        "rgba(0,0,0,.35)";
+        "rgba(0,0,0,.45)";
 
-        ctx.arc(
-            px+3,
-            py+5,
-            TILE*0.34,
+        ctx.ellipse(
+            px,
+            py+8,
+            TILE*0.28,
+            TILE*0.12,
+            0,
             0,
             Math.PI*2
         );
 
         ctx.fill();
 
-        // gradient
+        // 3D BODY
         let grad =
         ctx.createRadialGradient(
-            px-5,
-            py-5,
+            px-TILE*0.1,
+            py-TILE*0.12,
             5,
             px,
             py,
-            40
+            TILE*0.45
         );
 
         if(c.piece.color==="white"){
 
-            grad.addColorStop(0,"#fff");
-            grad.addColorStop(1,"#bbb");
+            grad.addColorStop(0,"#ffffff");
+            grad.addColorStop(.4,"#f8fafc");
+            grad.addColorStop(1,"#94a3b8");
 
         }else{
 
-            grad.addColorStop(0,"#444");
-            grad.addColorStop(1,"#000");
+            grad.addColorStop(0,"#6b7280");
+            grad.addColorStop(.5,"#111827");
+            grad.addColorStop(1,"#000000");
 
         }
 
@@ -624,55 +690,56 @@ function draw(){
 
         ctx.fillStyle = grad;
 
-        ctx.shadowBlur = 18;
+        ctx.shadowBlur = 25;
 
         ctx.shadowColor =
         c.piece.color==="white"
         ?
-        "#fff"
+        "#ffffff"
         :
-        "#000";
+        "#000000";
 
         ctx.arc(
             px,
             py,
-            TILE*0.34,
+            TILE*0.33,
             0,
             Math.PI*2
         );
 
         ctx.fill();
 
-        ctx.shadowBlur = 0;
-
-        // shine
+        // LIGHT
         ctx.beginPath();
 
         ctx.fillStyle =
-        "rgba(255,255,255,.25)";
+        "rgba(255,255,255,.28)";
 
         ctx.arc(
-            px-6,
-            py-6,
-            TILE*0.1,
+            px-TILE*0.09,
+            py-TILE*0.09,
+            TILE*0.08,
             0,
             Math.PI*2
         );
 
         ctx.fill();
 
-        // king
+        // KING
         if(c.piece.king){
 
-            ctx.font="20px Arial";
+            ctx.font =
+            TILE*0.25 + "px Arial";
 
             ctx.fillText(
                 "👑",
-                px-10,
-                py+7
+                px-TILE*0.12,
+                py+TILE*0.08
             );
 
         }
+
+        ctx.shadowBlur = 0;
 
     });
 
@@ -683,7 +750,6 @@ canvas.addEventListener("click",(e)=>{
 
     if(gameOver) return;
 
-    // AI rejimida faqat player navbatida yuradi
     if(
         mode==="ai" &&
         turn!==playerColor
@@ -704,7 +770,6 @@ canvas.addEventListener("click",(e)=>{
 
     let cell = get(x,y);
 
-    // MOVE
     if(selected){
 
         let moves =
@@ -740,7 +805,6 @@ canvas.addEventListener("click",(e)=>{
 
                     checkWin();
 
-                    // AI TURN
                     if(
                         mode==="ai" &&
                         turn!==playerColor
