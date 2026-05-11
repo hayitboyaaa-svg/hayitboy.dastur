@@ -2,122 +2,230 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkers PRO</title>
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>Checkers PRO ULTRA</title>
 
 <style>
 
-body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
     overflow:hidden;
     font-family:sans-serif;
     background:
     radial-gradient(circle at top,#1e293b,#020617);
+    touch-action:manipulation;
+}
+
+/* GAME WRAP */
+
+#gameWrap{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 /* MENU */
+
 #menu{
-    position:absolute;
+    position:fixed;
     inset:0;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     gap:18px;
-    background:rgba(0,0,0,.92);
-    z-index:10;
+    background:
+    rgba(0,0,0,.94);
+    z-index:100;
+    backdrop-filter:blur(20px);
 }
 
 .title{
     color:white;
-    font-size:42px;
+    font-size:
+    clamp(34px,6vw,52px);
     font-weight:bold;
-    text-shadow:0 0 25px orange;
+    text-shadow:
+    0 0 25px orange;
 }
+
+/* BUTTONS */
 
 button{
-    padding:14px 30px;
     border:none;
-    border-radius:14px;
     cursor:pointer;
-    font-size:18px;
-    font-weight:bold;
     color:white;
-    background:
-    linear-gradient(135deg,#f59e0b,#ef4444);
-    box-shadow:0 0 20px rgba(239,68,68,.4);
-    transition:.2s;
+    font-weight:bold;
+    transition:.18s;
 }
 
-button:hover{
-    transform:scale(1.05);
+.mainBtn{
+    width:240px;
+    padding:16px;
+    font-size:18px;
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #f59e0b,
+    #ef4444);
+
+    box-shadow:
+    0 10px 25px
+    rgba(239,68,68,.35);
+}
+
+.mainBtn:active{
+    transform:scale(.96);
 }
 
 /* HUD */
+
 .hud{
-    position:absolute;
-    top:10px;
-    left:10px;
+    position:fixed;
+    top:12px;
+    left:12px;
+
     color:white;
-    background:rgba(255,255,255,.06);
+
+    background:
+    rgba(255,255,255,.08);
+
+    backdrop-filter:
+    blur(16px);
+
     padding:14px 18px;
-    border-radius:14px;
-    backdrop-filter:blur(10px);
-    line-height:1.8;
+
+    border-radius:18px;
+
+    line-height:1.7;
+
     font-size:18px;
-    z-index:5;
+
+    z-index:20;
+
+    min-width:160px;
+
+    box-shadow:
+    0 0 25px
+    rgba(255,255,255,.08);
 }
 
-/* MOBILE FIX */
-@media(max-width:700px){
+/* MENU BUTTON */
 
-    .hud{
-        top:auto;
-        bottom:10px;
-        left:50%;
-        transform:translateX(-50%);
-        font-size:15px;
-        padding:10px 14px;
-        width:85%;
-        text-align:center;
-    }
-
-}
-
-/* BACK BUTTON */
-#backBtn{
-    position:absolute;
-    top:10px;
-    right:10px;
-    z-index:6;
-    padding:12px 18px;
-    font-size:16px;
+#menuBtn{
+    margin-top:10px;
+    width:100%;
+    padding:10px;
     border-radius:12px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #06b6d4);
+
+    font-size:16px;
 }
 
 /* WIN */
+
 #win{
-    position:absolute;
+    position:fixed;
     inset:0;
-    background:rgba(0,0,0,.92);
+
+    background:
+    rgba(0,0,0,.92);
+
     display:none;
+
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    color:white;
-    z-index:20;
-    font-size:52px;
-    text-shadow:0 0 20px white;
+
     gap:25px;
+
+    z-index:200;
+
+    color:white;
+
+    font-size:
+    clamp(34px,6vw,62px);
+
+    text-shadow:
+    0 0 25px white;
 }
 
-/* 4K CANVAS */
+/* CANVAS */
+
 canvas{
     display:block;
-    margin:auto;
+
+    border-radius:22px;
+
     image-rendering:auto;
+
     filter:
-    drop-shadow(0 0 40px rgba(255,140,0,.25));
+    drop-shadow(
+    0 0 35px
+    rgba(255,140,0,.2));
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .hud{
+
+        top:auto;
+        bottom:10px;
+
+        left:50%;
+        transform:translateX(-50%);
+
+        width:92%;
+
+        text-align:center;
+
+        font-size:15px;
+
+        padding:10px 12px;
+
+        border-radius:16px;
+    }
+
+    #menuBtn{
+        margin-top:8px;
+        padding:9px;
+        font-size:15px;
+    }
+
+    .mainBtn{
+        width:85vw;
+        max-width:320px;
+        font-size:17px;
+    }
+
+    .title{
+        font-size:34px;
+        text-align:center;
+    }
+
 }
 
 </style>
@@ -126,6 +234,7 @@ canvas{
 <body>
 
 <!-- MENU -->
+
 <div id="menu">
 
     <div class="title">
@@ -133,45 +242,65 @@ canvas{
     </div>
 
     <!-- MAIN MENU -->
-    <div id="mainMenu"
-    style="display:flex; flex-direction:column; gap:15px;">
 
-        <button onclick="openColorMenu('pvp')">
-            👥 1 vs 1
+    <div id="mainMenu"
+    style="
+    display:flex;
+    flex-direction:column;
+    gap:15px;">
+
+        <button
+        class="mainBtn"
+        onclick="openColorMenu('pvp')">
+
+        👥 1 vs 1
+
         </button>
 
-        <button onclick="openColorMenu('ai')">
-            🤖 vs Robot
+        <button
+        class="mainBtn"
+        onclick="openColorMenu('ai')">
+
+        🤖 vs Robot
+
         </button>
 
     </div>
 
     <!-- COLOR MENU -->
+
     <div id="colorMenu"
-    style="display:none; flex-direction:column; gap:15px;">
+    style="
+    display:none;
+    flex-direction:column;
+    gap:15px;">
 
         <h2 style="color:white">
             Choose Color
         </h2>
 
-        <button onclick="startGame('white')">
-            ⚪ Play White
+        <button
+        class="mainBtn"
+        onclick="startGame('white')">
+
+        ⚪ Play White
+
         </button>
 
-        <button onclick="startGame('black')">
-            ⚫ Play Black
+        <button
+        class="mainBtn"
+        onclick="startGame('black')">
+
+        ⚫ Play Black
+
         </button>
 
     </div>
 
 </div>
 
-<!-- BACK BUTTON -->
-<button id="backBtn" onclick="backMenu()">
-🏠 Menu
-</button>
-
 <!-- HUD -->
+
 <div class="hud">
 
     Turn:
@@ -187,15 +316,31 @@ canvas{
     ⚫ Black:
     <span id="bscore">0</span>
 
+    <button
+    id="menuBtn"
+    onclick="backMenu()">
+
+    🏠 Menu
+
+    </button>
+
 </div>
 
 <!-- WIN -->
+
 <div id="win"></div>
 
 <!-- GAME -->
+
+<div id="gameWrap">
+
 <canvas id="game"></canvas>
 
+</div>
+
 <script>
+
+/* CANVAS */
 
 const canvas =
 document.getElementById("game");
@@ -203,31 +348,59 @@ document.getElementById("game");
 const ctx =
 canvas.getContext("2d");
 
-/* 4K + HIGH FPS */
+/* HIGH FPS */
+
 const DPR =
 Math.min(
 window.devicePixelRatio || 1,
 2
 );
 
-let size =
-Math.min(innerWidth,innerHeight)*0.9;
+/* PERFECT MOBILE SIZE */
 
-canvas.width = size * DPR;
-canvas.height = size * DPR;
+let boardSize =
+Math.min(
+window.innerWidth,
+window.innerHeight
+);
 
-canvas.style.width = size + "px";
-canvas.style.height = size + "px";
+if(window.innerWidth < 700){
+
+    boardSize *= 0.92;
+
+}else{
+
+    boardSize *= 0.82;
+
+}
+
+canvas.width =
+boardSize * DPR;
+
+canvas.height =
+boardSize * DPR;
+
+canvas.style.width =
+boardSize + "px";
+
+canvas.style.height =
+boardSize + "px";
 
 ctx.scale(DPR,DPR);
 
-const TILE = size/8;
+const TILE =
+boardSize / 8;
+
+/* GAME */
 
 let board = [];
+
 let selected = null;
 
 let turn = "white";
+
 let mode = "pvp";
+
 let playerColor = "white";
 
 let wScore = 0;
@@ -235,7 +408,8 @@ let bScore = 0;
 
 let gameOver = false;
 
-// INIT
+/* INIT */
+
 function init(){
 
     board = [];
@@ -285,44 +459,36 @@ function init(){
 
 }
 
-// MENU BACK
+/* MENU */
+
+function openColorMenu(m){
+
+    mode = m;
+
+    document.getElementById(
+    "mainMenu"
+    ).style.display="none";
+
+    document.getElementById(
+    "colorMenu"
+    ).style.display="flex";
+
+}
+
 function backMenu(){
 
     location.reload();
 
 }
 
-// GET CELL
-function get(x,y){
+/* START */
 
-    return board.find(
-        c=>c.x===x && c.y===y
-    );
-
-}
-
-// MENU
-function openColorMenu(m){
-
-    mode = m;
-
-    document.getElementById(
-        "mainMenu"
-    ).style.display="none";
-
-    document.getElementById(
-        "colorMenu"
-    ).style.display="flex";
-
-}
-
-// START GAME
 function startGame(color){
 
     playerColor = color;
 
     document.getElementById(
-        "menu"
+    "menu"
     ).style.display="none";
 
     init();
@@ -330,7 +496,7 @@ function startGame(color){
     turn = "white";
 
     document.getElementById(
-        "turn"
+    "turn"
     ).innerText = "White";
 
     if(
@@ -338,28 +504,38 @@ function startGame(color){
         playerColor==="black"
     ){
 
-        setTimeout(()=>{
-            aiMove();
-        },500);
+        setTimeout(aiMove,450);
 
     }
 
 }
 
-// SCORE
+/* SCORE */
+
 function updateScore(){
 
     document.getElementById(
-        "wscore"
+    "wscore"
     ).innerText = wScore;
 
     document.getElementById(
-        "bscore"
+    "bscore"
     ).innerText = bScore;
 
 }
 
-// MOVES
+/* GET */
+
+function get(x,y){
+
+    return board.find(
+    c=>c.x===x && c.y===y
+    );
+
+}
+
+/* MOVES */
+
 function getMoves(cell){
 
     let moves = [];
@@ -381,13 +557,20 @@ function getMoves(cell){
 
     dirs.forEach(d=>{
 
-        let nx = cell.x+d[0];
-        let ny = cell.y+d[1];
+        let nx =
+        cell.x+d[0];
 
-        let jx = cell.x+d[0]*2;
-        let jy = cell.y+d[1]*2;
+        let ny =
+        cell.y+d[1];
+
+        let jx =
+        cell.x+d[0]*2;
+
+        let jy =
+        cell.y+d[1]*2;
 
         let n = get(nx,ny);
+
         let j = get(jx,jy);
 
         if(n && !n.piece){
@@ -423,16 +606,29 @@ function getMoves(cell){
 
 }
 
-// ANIMATION
-function animate(fromCell,toCell,move,callback){
+/* ANIMATION */
 
-    let piece = fromCell.piece;
+function animate(
+fromCell,
+toCell,
+move,
+callback
+){
 
-    let startX = fromCell.x;
-    let startY = fromCell.y;
+    let piece =
+    fromCell.piece;
 
-    let endX = toCell.x;
-    let endY = toCell.y;
+    let startX =
+    fromCell.x;
+
+    let startY =
+    fromCell.y;
+
+    let endX =
+    toCell.x;
+
+    let endY =
+    toCell.y;
 
     let t = 0;
 
@@ -441,7 +637,7 @@ function animate(fromCell,toCell,move,callback){
 
     function step(){
 
-        t += 0.042;
+        t += 0.055;
 
         if(t >= 1){
 
@@ -449,14 +645,15 @@ function animate(fromCell,toCell,move,callback){
             piece.animY = null;
 
             movePiece(
-                fromCell,
-                toCell,
-                move
+            fromCell,
+            toCell,
+            move
             );
 
             callback();
 
             return;
+
         }
 
         piece.animX =
@@ -469,22 +666,32 @@ function animate(fromCell,toCell,move,callback){
 
     }
 
-    step();
+    requestAnimationFrame(step);
 
 }
 
-// MOVE
-function movePiece(from,to,move){
+/* MOVE */
 
-    to.piece = from.piece;
+function movePiece(
+from,
+to,
+move
+){
 
-    from.piece = null;
+    to.piece =
+    from.piece;
+
+    from.piece =
+    null;
 
     if(move.type==="jump"){
 
-        move.kill.piece = null;
+        move.kill.piece =
+        null;
 
-        if(to.piece.color==="white"){
+        if(
+        to.piece.color==="white"
+        ){
 
             wScore++;
 
@@ -499,8 +706,8 @@ function movePiece(from,to,move){
     }
 
     if(
-        to.y===0 &&
-        to.piece.color==="white"
+    to.y===0 &&
+    to.piece.color==="white"
     ){
 
         to.piece.king=true;
@@ -508,8 +715,8 @@ function movePiece(from,to,move){
     }
 
     if(
-        to.y===7 &&
-        to.piece.color==="black"
+    to.y===7 &&
+    to.piece.color==="black"
     ){
 
         to.piece.king=true;
@@ -518,25 +725,26 @@ function movePiece(from,to,move){
 
 }
 
-// WIN
+/* WIN */
+
 function checkWin(){
 
     let white =
     board.filter(c=>
-        c.piece &&
-        c.piece.color==="white"
+    c.piece &&
+    c.piece.color==="white"
     ).length;
 
     let black =
     board.filter(c=>
-        c.piece &&
-        c.piece.color==="black"
+    c.piece &&
+    c.piece.color==="black"
     ).length;
 
     if(white===0){
 
         showWin(
-            "⚫ BLACK WINS!"
+        "⚫ BLACK WINS!"
         );
 
     }
@@ -544,14 +752,15 @@ function checkWin(){
     if(black===0){
 
         showWin(
-            "⚪ WHITE WINS!"
+        "⚪ WHITE WINS!"
         );
 
     }
 
 }
 
-// SHOW WIN
+/* SHOW WIN */
+
 function showWin(text){
 
     gameOver = true;
@@ -562,106 +771,118 @@ function showWin(text){
     win.style.display="flex";
 
     win.innerHTML = `
-        <div>${text}</div>
 
-        <button onclick="location.reload()">
-            🔄 Restart
-        </button>
+    <div>${text}</div>
+
+    <button
+    class="mainBtn"
+    onclick="location.reload()">
+
+    🔄 Restart
+
+    </button>
+
     `;
 
 }
 
-// DRAW
+/* DRAW */
+
 function draw(){
 
-    let bg =
-    ctx.createLinearGradient(
-        0,0,size,size
+    ctx.clearRect(
+    0,
+    0,
+    boardSize,
+    boardSize
     );
 
-    bg.addColorStop(0,"#78350f");
-    bg.addColorStop(1,"#1e293b");
+    /* BOARD */
 
-    ctx.fillStyle = bg;
-
-    ctx.fillRect(0,0,size,size);
-
-    // BOARD
     for(let y=0;y<8;y++){
 
         for(let x=0;x<8;x++){
 
-            let px = x*TILE;
-            let py = y*TILE;
+            let px =
+            x*TILE;
+
+            let py =
+            y*TILE;
 
             let dark =
             (x+y)%2;
 
             let grad =
             ctx.createLinearGradient(
-                px,
-                py,
-                px+TILE,
-                py+TILE
+            px,
+            py,
+            px+TILE,
+            py+TILE
             );
 
             if(dark){
 
-                grad.addColorStop(0,"#78350f");
-                grad.addColorStop(1,"#431407");
+                grad.addColorStop(
+                0,
+                "#78350f"
+                );
+
+                grad.addColorStop(
+                1,
+                "#431407"
+                );
 
             }else{
 
-                grad.addColorStop(0,"#fcd34d");
-                grad.addColorStop(1,"#f59e0b");
+                grad.addColorStop(
+                0,
+                "#fcd34d"
+                );
+
+                grad.addColorStop(
+                1,
+                "#f59e0b"
+                );
 
             }
 
-            ctx.fillStyle = grad;
+            ctx.fillStyle =
+            grad;
 
             ctx.fillRect(
-                px,
-                py,
-                TILE,
-                TILE
-            );
-
-            ctx.strokeStyle =
-            "rgba(255,255,255,.08)";
-
-            ctx.lineWidth = 2;
-
-            ctx.strokeRect(
-                px,
-                py,
-                TILE,
-                TILE
+            px,
+            py,
+            TILE,
+            TILE
             );
 
         }
 
     }
 
-    // HIGHLIGHT
+    /* MOVE ZONES */
+
     if(selected){
 
-        getMoves(selected).forEach(m=>{
+        getMoves(selected)
+        .forEach(m=>{
 
             ctx.fillStyle =
             "rgba(0,255,120,.35)";
 
             ctx.fillRect(
-                m.cell.x*TILE,
-                m.cell.y*TILE,
-                TILE,
-                TILE
+            m.cell.x*TILE,
+            m.cell.y*TILE,
+            TILE,
+            TILE
             );
 
         });
 
     }
 
-    // PIECES
+    /* PIECES */
+
     board.forEach(c=>{
 
         if(!c.piece) return;
@@ -674,112 +895,148 @@ function draw(){
         (c.piece.animY ?? c.y)
         *TILE + TILE/2;
 
+        /* SHADOW */
+
         ctx.beginPath();
 
         ctx.fillStyle =
-        "rgba(0,0,0,.45)";
+        "rgba(0,0,0,.4)";
 
         ctx.ellipse(
-            px,
-            py+8,
-            TILE*0.28,
-            TILE*0.12,
-            0,
-            0,
-            Math.PI*2
+        px,
+        py+7,
+        TILE*0.28,
+        TILE*0.12,
+        0,
+        0,
+        Math.PI*2
         );
 
         ctx.fill();
+
+        /* 3D */
 
         let grad =
         ctx.createRadialGradient(
-            px-TILE*0.1,
-            py-TILE*0.12,
-            5,
-            px,
-            py,
-            TILE*0.45
+        px-TILE*.1,
+        py-TILE*.1,
+        5,
+        px,
+        py,
+        TILE*.45
         );
 
-        if(c.piece.color==="white"){
+        if(
+        c.piece.color==="white"
+        ){
 
-            grad.addColorStop(0,"#ffffff");
-            grad.addColorStop(.4,"#f8fafc");
-            grad.addColorStop(1,"#94a3b8");
+            grad.addColorStop(
+            0,
+            "#ffffff"
+            );
+
+            grad.addColorStop(
+            .4,
+            "#f8fafc"
+            );
+
+            grad.addColorStop(
+            1,
+            "#94a3b8"
+            );
 
         }else{
 
-            grad.addColorStop(0,"#6b7280");
-            grad.addColorStop(.5,"#111827");
-            grad.addColorStop(1,"#000000");
-
-        }
-
-        ctx.beginPath();
-
-        ctx.fillStyle = grad;
-
-        ctx.shadowBlur = 25;
-
-        ctx.shadowColor =
-        c.piece.color==="white"
-        ?
-        "#ffffff"
-        :
-        "#000000";
-
-        ctx.arc(
-            px,
-            py,
-            TILE*0.33,
+            grad.addColorStop(
             0,
-            Math.PI*2
-        );
+            "#6b7280"
+            );
 
-        ctx.fill();
+            grad.addColorStop(
+            .5,
+            "#111827"
+            );
 
-        ctx.beginPath();
-
-        ctx.fillStyle =
-        "rgba(255,255,255,.28)";
-
-        ctx.arc(
-            px-TILE*0.09,
-            py-TILE*0.09,
-            TILE*0.08,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fill();
-
-        if(c.piece.king){
-
-            ctx.font =
-            TILE*0.25 + "px Arial";
-
-            ctx.fillText(
-                "👑",
-                px-TILE*0.12,
-                py+TILE*0.08
+            grad.addColorStop(
+            1,
+            "#000"
             );
 
         }
 
+        ctx.beginPath();
+
+        ctx.fillStyle =
+        grad;
+
+        ctx.shadowBlur = 22;
+
+        ctx.shadowColor =
+        c.piece.color==="white"
+        ?
+        "#fff"
+        :
+        "#000";
+
+        ctx.arc(
+        px,
+        py,
+        TILE*.33,
+        0,
+        Math.PI*2
+        );
+
+        ctx.fill();
+
         ctx.shadowBlur = 0;
+
+        /* LIGHT */
+
+        ctx.beginPath();
+
+        ctx.fillStyle =
+        "rgba(255,255,255,.25)";
+
+        ctx.arc(
+        px-TILE*.08,
+        py-TILE*.08,
+        TILE*.07,
+        0,
+        Math.PI*2
+        );
+
+        ctx.fill();
+
+        /* KING */
+
+        if(c.piece.king){
+
+            ctx.font =
+            TILE*.25 + "px Arial";
+
+            ctx.fillText(
+            "👑",
+            px-TILE*.11,
+            py+TILE*.08
+            );
+
+        }
 
     });
 
 }
 
-// CLICK
-canvas.addEventListener("click",(e)=>{
+/* CLICK */
+
+canvas.addEventListener(
+"click",
+e=>{
 
     if(gameOver) return;
 
     if(
-        mode==="ai" &&
-        turn!==playerColor
+    mode==="ai" &&
+    turn!==playerColor
     ){
         return;
     }
@@ -787,15 +1044,18 @@ canvas.addEventListener("click",(e)=>{
     let rect =
     canvas.getBoundingClientRect();
 
-    let x = Math.floor(
-        (e.clientX-rect.left)/TILE
+    let x =
+    Math.floor(
+    (e.clientX-rect.left)/TILE
     );
 
-    let y = Math.floor(
-        (e.clientY-rect.top)/TILE
+    let y =
+    Math.floor(
+    (e.clientY-rect.top)/TILE
     );
 
-    let cell = get(x,y);
+    let cell =
+    get(x,y);
 
     if(selected){
 
@@ -804,48 +1064,51 @@ canvas.addEventListener("click",(e)=>{
 
         let move =
         moves.find(
-            m=>m.cell===cell
+        m=>m.cell===cell
         );
 
         if(move){
 
             animate(
-                selected,
-                cell,
-                move,
-                ()=>{
+            selected,
+            cell,
+            move,
 
-                    selected = null;
+            ()=>{
 
-                    turn =
-                    turn==="white"
-                    ?
-                    "black"
-                    :
-                    "white";
+                selected = null;
 
-                    document.getElementById(
-                        "turn"
-                    ).innerText =
-                    turn.charAt(0).toUpperCase()
-                    + turn.slice(1);
+                turn =
+                turn==="white"
+                ?
+                "black"
+                :
+                "white";
 
-                    checkWin();
+                document.getElementById(
+                "turn"
+                ).innerText =
 
-                    if(
-                        mode==="ai" &&
-                        turn!==playerColor
-                    ){
+                turn.charAt(0)
+                .toUpperCase()
 
-                        setTimeout(
-                            aiMove,
-                            500
-                        );
+                + turn.slice(1);
 
-                    }
+                checkWin();
+
+                if(
+                mode==="ai" &&
+                turn!==playerColor
+                ){
+
+                    setTimeout(
+                    aiMove,
+                    400
+                    );
 
                 }
-            );
+
+            });
 
         }else{
 
@@ -860,8 +1123,10 @@ canvas.addEventListener("click",(e)=>{
         cell.piece.color===turn &&
 
         (
-            mode==="pvp" ||
-            cell.piece.color===playerColor
+        mode==="pvp" ||
+
+        cell.piece.color===
+        playerColor
         )
 
     ){
@@ -872,7 +1137,8 @@ canvas.addEventListener("click",(e)=>{
 
 });
 
-// AI
+/* AI */
+
 function aiMove(){
 
     if(gameOver) return;
@@ -886,15 +1152,19 @@ function aiMove(){
 
     let pieces =
     board.filter(c=>
-        c.piece &&
-        c.piece.color===aiColor
+
+    c.piece &&
+
+    c.piece.color===aiColor
+
     );
 
     let all = [];
 
     pieces.forEach(p=>{
 
-        getMoves(p).forEach(m=>{
+        getMoves(p)
+        .forEach(m=>{
 
             all.push({
                 p,
@@ -908,11 +1178,11 @@ function aiMove(){
     if(all.length===0){
 
         showWin(
-            playerColor==="white"
-            ?
-            "⚪ WHITE WINS!"
-            :
-            "⚫ BLACK WINS!"
+        playerColor==="white"
+        ?
+        "⚪ WHITE WINS!"
+        :
+        "⚫ BLACK WINS!"
         );
 
         return;
@@ -921,54 +1191,65 @@ function aiMove(){
 
     let jumps =
     all.filter(
-        a=>a.m.type==="jump"
+    a=>a.m.type==="jump"
     );
 
     let chosen =
-    (jumps.length?jumps:all)
+    (jumps.length
+    ?
+    jumps
+    :
+    all)
+
     [
-        Math.floor(
-            Math.random()*
-            (
-                jumps.length
-                ?
-                jumps.length
-                :
-                all.length
-            )
-        )
+
+    Math.floor(
+
+    Math.random()*
+
+    (
+    jumps.length
+    ?
+    jumps.length
+    :
+    all.length
+    )
+
+    )
+
     ];
 
     animate(
-        chosen.p,
-        chosen.m.cell,
-        chosen.m,
-        ()=>{
 
-            turn = playerColor;
+    chosen.p,
 
-            document.getElementById(
-                "turn"
-            ).innerText =
-            turn.charAt(0).toUpperCase()
-            + turn.slice(1);
+    chosen.m.cell,
 
-            checkWin();
+    chosen.m,
 
-        }
-    );
+    ()=>{
+
+        turn =
+        playerColor;
+
+        document.getElementById(
+        "turn"
+        ).innerText =
+
+        turn.charAt(0)
+        .toUpperCase()
+
+        + turn.slice(1);
+
+        checkWin();
+
+    });
 
 }
 
-// LOOP
-function loop(){
+/* LOOP */
 
-    ctx.clearRect(
-        0,
-        0,
-        size,
-        size
-    );
+function loop(){
 
     draw();
 
