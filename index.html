@@ -55,7 +55,7 @@ button:hover{
 
 /* HUD */
 .hud{
-    position:fixed;
+    position:absolute;
     top:10px;
     left:10px;
     color:white;
@@ -65,7 +65,7 @@ button:hover{
     backdrop-filter:blur(10px);
     line-height:1.8;
     font-size:18px;
-    z-index:50;
+    z-index:5;
 }
 
 /* MOBILE FIX */
@@ -78,19 +78,21 @@ button:hover{
         transform:translateX(-50%);
         font-size:15px;
         padding:10px 14px;
-        line-height:1.5;
-        white-space:nowrap;
+        width:85%;
+        text-align:center;
     }
 
-    .title{
-        font-size:32px;
-    }
+}
 
-    button{
-        font-size:16px;
-        padding:12px 22px;
-    }
-
+/* BACK BUTTON */
+#backBtn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    z-index:6;
+    padding:12px 18px;
+    font-size:16px;
+    border-radius:12px;
 }
 
 /* WIN */
@@ -163,6 +165,11 @@ canvas{
     </div>
 
 </div>
+
+<!-- BACK BUTTON -->
+<button id="backBtn" onclick="backMenu()">
+🏠 Menu
+</button>
 
 <!-- HUD -->
 <div class="hud">
@@ -275,6 +282,13 @@ function init(){
         }
 
     }
+
+}
+
+// MENU BACK
+function backMenu(){
+
+    location.reload();
 
 }
 
@@ -560,7 +574,6 @@ function showWin(text){
 // DRAW
 function draw(){
 
-    // BACKGROUND
     let bg =
     ctx.createLinearGradient(
         0,0,size,size
@@ -629,7 +642,7 @@ function draw(){
 
     }
 
-    // GREEN MOVE CELLS
+    // HIGHLIGHT
     if(selected){
 
         getMoves(selected).forEach(m=>{
@@ -642,18 +655,6 @@ function draw(){
                 m.cell.y*TILE,
                 TILE,
                 TILE
-            );
-
-            ctx.strokeStyle =
-            "rgba(0,255,120,.9)";
-
-            ctx.lineWidth = 3;
-
-            ctx.strokeRect(
-                m.cell.x*TILE+2,
-                m.cell.y*TILE+2,
-                TILE-4,
-                TILE-4
             );
 
         });
