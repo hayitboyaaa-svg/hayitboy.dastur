@@ -2,44 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<title>Checkers PRO ULTRA</title>
+<title>Checkers PRO</title>
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
 }
 
 body{
+    margin:0;
     overflow:hidden;
     font-family:sans-serif;
     background:
     radial-gradient(circle at top,#1e293b,#020617);
-    touch-action:manipulation;
-}
-
-/* GAME WRAP */
-
-#gameWrap{
-    width:100vw;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
 }
 
 /* MENU */
-
 #menu{
     position:fixed;
     inset:0;
@@ -48,182 +31,153 @@ body{
     justify-content:center;
     align-items:center;
     gap:18px;
-    background:
-    rgba(0,0,0,.94);
-    z-index:100;
-    backdrop-filter:blur(20px);
+    background:rgba(0,0,0,.92);
+    z-index:50;
 }
 
 .title{
     color:white;
-    font-size:
-    clamp(34px,6vw,52px);
+    font-size:42px;
     font-weight:bold;
-    text-shadow:
-    0 0 25px orange;
+    text-shadow:0 0 25px orange;
 }
-
-/* BUTTONS */
 
 button{
+    padding:14px 30px;
     border:none;
+    border-radius:14px;
     cursor:pointer;
-    color:white;
-    font-weight:bold;
-    transition:.18s;
-}
-
-.mainBtn{
-    width:240px;
-    padding:16px;
     font-size:18px;
-    border-radius:18px;
-
+    font-weight:bold;
+    color:white;
     background:
-    linear-gradient(
-    135deg,
-    #f59e0b,
-    #ef4444);
+    linear-gradient(135deg,#f59e0b,#ef4444);
 
     box-shadow:
-    0 10px 25px
-    rgba(239,68,68,.35);
+    0 0 20px rgba(239,68,68,.4);
+
+    transition:.2s;
 }
 
-.mainBtn:active{
-    transform:scale(.96);
+button:hover{
+    transform:scale(1.05);
 }
 
 /* HUD */
-
 .hud{
     position:fixed;
-    top:12px;
+
+    bottom:12px;
     left:12px;
 
     color:white;
 
-    background:
-    rgba(255,255,255,.08);
+    background:rgba(255,255,255,.08);
 
-    backdrop-filter:
-    blur(16px);
+    padding:12px 16px;
 
-    padding:14px 18px;
+    border-radius:16px;
 
-    border-radius:18px;
+    backdrop-filter:blur(12px);
 
     line-height:1.7;
 
-    font-size:18px;
+    font-size:16px;
 
     z-index:20;
 
-    min-width:160px;
-
     box-shadow:
-    0 0 25px
-    rgba(255,255,255,.08);
+    0 0 20px rgba(0,0,0,.3);
 }
 
 /* MENU BUTTON */
-
 #menuBtn{
-    margin-top:10px;
-    width:100%;
-    padding:10px;
-    border-radius:12px;
-
-    background:
-    linear-gradient(
-    135deg,
-    #2563eb,
-    #06b6d4);
-
-    font-size:16px;
-}
-
-/* WIN */
-
-#win{
     position:fixed;
-    inset:0;
 
-    background:
-    rgba(0,0,0,.92);
+    bottom:12px;
+    right:12px;
 
-    display:none;
+    z-index:30;
 
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
+    border:none;
+    border-radius:16px;
 
-    gap:25px;
+    padding:14px 18px;
 
-    z-index:200;
+    font-size:17px;
+    font-weight:bold;
 
     color:white;
 
-    font-size:
-    clamp(34px,6vw,62px);
+    background:
+    linear-gradient(
+        135deg,
+        #f59e0b,
+        #ef4444
+    );
 
-    text-shadow:
-    0 0 25px white;
+    box-shadow:
+    0 0 20px rgba(0,0,0,.35);
+
+    cursor:pointer;
+}
+
+/* WIN */
+#win{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    z-index:60;
+    font-size:52px;
+    text-shadow:0 0 20px white;
+    gap:25px;
 }
 
 /* CANVAS */
-
 canvas{
     display:block;
-
-    border-radius:22px;
+    margin:auto;
 
     image-rendering:auto;
 
     filter:
     drop-shadow(
-    0 0 35px
-    rgba(255,140,0,.2));
+    0 0 40px rgba(255,140,0,.25));
 }
 
-/* MOBILE */
+/* PHONE */
+@media(max-width:768px){
 
-@media(max-width:700px){
+    .title{
+        font-size:30px;
+        text-align:center;
+    }
+
+    button{
+        font-size:16px;
+        padding:12px 22px;
+    }
 
     .hud{
-
-        top:auto;
-        bottom:10px;
-
-        left:50%;
-        transform:translateX(-50%);
-
-        width:92%;
-
-        text-align:center;
-
-        font-size:15px;
-
-        padding:10px 12px;
-
-        border-radius:16px;
+        font-size:14px;
+        padding:10px 14px;
+        max-width:150px;
     }
 
     #menuBtn{
-        margin-top:8px;
-        padding:9px;
         font-size:15px;
+        padding:12px 15px;
     }
 
-    .mainBtn{
-        width:85vw;
-        max-width:320px;
-        font-size:17px;
-    }
-
-    .title{
-        font-size:34px;
+    #win{
+        font-size:32px;
         text-align:center;
+        padding:20px;
     }
 
 }
@@ -234,44 +188,29 @@ canvas{
 <body>
 
 <!-- MENU -->
-
 <div id="menu">
 
     <div class="title">
         ⚫ CHECKERS PRO ⚪
     </div>
 
-    <!-- MAIN MENU -->
-
     <div id="mainMenu"
-    style="
-    display:flex;
+    style="display:flex;
     flex-direction:column;
     gap:15px;">
 
-        <button
-        class="mainBtn"
-        onclick="openColorMenu('pvp')">
-
-        👥 1 vs 1
-
+        <button onclick="openColorMenu('pvp')">
+            👥 1 vs 1
         </button>
 
-        <button
-        class="mainBtn"
-        onclick="openColorMenu('ai')">
-
-        🤖 vs Robot
-
+        <button onclick="openColorMenu('ai')">
+            🤖 vs Robot
         </button>
 
     </div>
 
-    <!-- COLOR MENU -->
-
     <div id="colorMenu"
-    style="
-    display:none;
+    style="display:none;
     flex-direction:column;
     gap:15px;">
 
@@ -279,20 +218,12 @@ canvas{
             Choose Color
         </h2>
 
-        <button
-        class="mainBtn"
-        onclick="startGame('white')">
-
-        ⚪ Play White
-
+        <button onclick="startGame('white')">
+            ⚪ Play White
         </button>
 
-        <button
-        class="mainBtn"
-        onclick="startGame('black')">
-
-        ⚫ Play Black
-
+        <button onclick="startGame('black')">
+            ⚫ Play Black
         </button>
 
     </div>
@@ -300,7 +231,6 @@ canvas{
 </div>
 
 <!-- HUD -->
-
 <div class="hud">
 
     Turn:
@@ -316,31 +246,21 @@ canvas{
     ⚫ Black:
     <span id="bscore">0</span>
 
-    <button
-    id="menuBtn"
-    onclick="backMenu()">
-
-    🏠 Menu
-
-    </button>
-
 </div>
 
-<!-- WIN -->
+<!-- MENU BTN -->
+<button id="menuBtn"
+onclick="location.reload()">
+☰ Menu
+</button>
 
+<!-- WIN -->
 <div id="win"></div>
 
 <!-- GAME -->
-
-<div id="gameWrap">
-
 <canvas id="game"></canvas>
 
-</div>
-
 <script>
-
-/* CANVAS */
 
 const canvas =
 document.getElementById("game");
@@ -348,59 +268,30 @@ document.getElementById("game");
 const ctx =
 canvas.getContext("2d");
 
-/* HIGH FPS */
-
 const DPR =
 Math.min(
 window.devicePixelRatio || 1,
 2
 );
 
-/* PERFECT MOBILE SIZE */
+let size =
+Math.min(innerWidth,innerHeight)*0.92;
 
-let boardSize =
-Math.min(
-window.innerWidth,
-window.innerHeight
-);
+canvas.width = size * DPR;
+canvas.height = size * DPR;
 
-if(window.innerWidth < 700){
-
-    boardSize *= 0.92;
-
-}else{
-
-    boardSize *= 0.82;
-
-}
-
-canvas.width =
-boardSize * DPR;
-
-canvas.height =
-boardSize * DPR;
-
-canvas.style.width =
-boardSize + "px";
-
-canvas.style.height =
-boardSize + "px";
+canvas.style.width = size+"px";
+canvas.style.height = size+"px";
 
 ctx.scale(DPR,DPR);
 
-const TILE =
-boardSize / 8;
-
-/* GAME */
+const TILE = size/8;
 
 let board = [];
-
 let selected = null;
 
 let turn = "white";
-
 let mode = "pvp";
-
 let playerColor = "white";
 
 let wScore = 0;
@@ -409,13 +300,12 @@ let bScore = 0;
 let gameOver = false;
 
 /* INIT */
-
 function init(){
 
-    board = [];
+    board=[];
 
-    wScore = 0;
-    bScore = 0;
+    wScore=0;
+    bScore=0;
 
     updateScore();
 
@@ -423,13 +313,13 @@ function init(){
 
         for(let x=0;x<8;x++){
 
-            let piece = null;
+            let piece=null;
 
             if((x+y)%2===1){
 
                 if(y<3){
 
-                    piece = {
+                    piece={
                         color:"black",
                         king:false
                     };
@@ -438,7 +328,7 @@ function init(){
 
                 if(y>4){
 
-                    piece = {
+                    piece={
                         color:"white",
                         king:false
                     };
@@ -459,90 +349,72 @@ function init(){
 
 }
 
-/* MENU */
+/* GET */
+function get(x,y){
 
-function openColorMenu(m){
-
-    mode = m;
-
-    document.getElementById(
-    "mainMenu"
-    ).style.display="none";
-
-    document.getElementById(
-    "colorMenu"
-    ).style.display="flex";
+    return board.find(
+    c=>c.x===x && c.y===y);
 
 }
 
-function backMenu(){
+/* MENU */
+function openColorMenu(m){
 
-    location.reload();
+    mode=m;
+
+    document.getElementById(
+    "mainMenu").style.display="none";
+
+    document.getElementById(
+    "colorMenu").style.display="flex";
 
 }
 
 /* START */
-
 function startGame(color){
 
-    playerColor = color;
+    playerColor=color;
 
     document.getElementById(
-    "menu"
-    ).style.display="none";
+    "menu").style.display="none";
 
     init();
 
-    turn = "white";
+    turn="white";
 
     document.getElementById(
-    "turn"
-    ).innerText = "White";
+    "turn").innerText="White";
 
     if(
         mode==="ai" &&
         playerColor==="black"
     ){
 
-        setTimeout(aiMove,450);
+        setTimeout(aiMove,400);
 
     }
 
 }
 
 /* SCORE */
-
 function updateScore(){
 
     document.getElementById(
-    "wscore"
-    ).innerText = wScore;
+    "wscore").innerText=wScore;
 
     document.getElementById(
-    "bscore"
-    ).innerText = bScore;
-
-}
-
-/* GET */
-
-function get(x,y){
-
-    return board.find(
-    c=>c.x===x && c.y===y
-    );
+    "bscore").innerText=bScore;
 
 }
 
 /* MOVES */
-
 function getMoves(cell){
 
-    let moves = [];
+    let moves=[];
 
     if(!cell.piece) return moves;
 
-    let dirs =
+    let dirs=
     cell.piece.king
     ?
     [[1,1],[-1,1],[1,-1],[-1,-1]]
@@ -557,21 +429,14 @@ function getMoves(cell){
 
     dirs.forEach(d=>{
 
-        let nx =
-        cell.x+d[0];
+        let nx=cell.x+d[0];
+        let ny=cell.y+d[1];
 
-        let ny =
-        cell.y+d[1];
+        let jx=cell.x+d[0]*2;
+        let jy=cell.y+d[1]*2;
 
-        let jx =
-        cell.x+d[0]*2;
-
-        let jy =
-        cell.y+d[1]*2;
-
-        let n = get(nx,ny);
-
-        let j = get(jx,jy);
+        let n=get(nx,ny);
+        let j=get(jx,jy);
 
         if(n && !n.piece){
 
@@ -606,48 +471,35 @@ function getMoves(cell){
 
 }
 
-/* ANIMATION */
+/* ANIMATE */
+function animate(fromCell,toCell,move,callback){
 
-function animate(
-fromCell,
-toCell,
-move,
-callback
-){
+    let piece=fromCell.piece;
 
-    let piece =
-    fromCell.piece;
+    let startX=fromCell.x;
+    let startY=fromCell.y;
 
-    let startX =
-    fromCell.x;
+    let endX=toCell.x;
+    let endY=toCell.y;
 
-    let startY =
-    fromCell.y;
+    let t=0;
 
-    let endX =
-    toCell.x;
-
-    let endY =
-    toCell.y;
-
-    let t = 0;
-
-    piece.animX = startX;
-    piece.animY = startY;
+    piece.animX=startX;
+    piece.animY=startY;
 
     function step(){
 
-        t += 0.055;
+        t += 0.075;
 
-        if(t >= 1){
+        if(t>=1){
 
-            piece.animX = null;
-            piece.animY = null;
+            piece.animX=null;
+            piece.animY=null;
 
             movePiece(
-            fromCell,
-            toCell,
-            move
+                fromCell,
+                toCell,
+                move
             );
 
             callback();
@@ -656,42 +508,32 @@ callback
 
         }
 
-        piece.animX =
-        startX + (endX-startX)*t;
+        piece.animX=
+        startX+(endX-startX)*t;
 
-        piece.animY =
-        startY + (endY-startY)*t;
+        piece.animY=
+        startY+(endY-startY)*t;
 
         requestAnimationFrame(step);
 
     }
 
-    requestAnimationFrame(step);
+    step();
 
 }
 
 /* MOVE */
+function movePiece(from,to,move){
 
-function movePiece(
-from,
-to,
-move
-){
+    to.piece=from.piece;
 
-    to.piece =
-    from.piece;
-
-    from.piece =
-    null;
+    from.piece=null;
 
     if(move.type==="jump"){
 
-        move.kill.piece =
-        null;
+        move.kill.piece=null;
 
-        if(
-        to.piece.color==="white"
-        ){
+        if(to.piece.color==="white"){
 
             wScore++;
 
@@ -706,8 +548,8 @@ move
     }
 
     if(
-    to.y===0 &&
-    to.piece.color==="white"
+        to.y===0 &&
+        to.piece.color==="white"
     ){
 
         to.piece.king=true;
@@ -715,8 +557,8 @@ move
     }
 
     if(
-    to.y===7 &&
-    to.piece.color==="black"
+        to.y===7 &&
+        to.piece.color==="black"
     ){
 
         to.piece.king=true;
@@ -726,252 +568,168 @@ move
 }
 
 /* WIN */
-
 function checkWin(){
 
-    let white =
+    let white=
     board.filter(c=>
     c.piece &&
-    c.piece.color==="white"
-    ).length;
+    c.piece.color==="white").length;
 
-    let black =
+    let black=
     board.filter(c=>
     c.piece &&
-    c.piece.color==="black"
-    ).length;
+    c.piece.color==="black").length;
 
     if(white===0){
 
         showWin(
-        "⚫ BLACK WINS!"
-        );
+        "⚫ BLACK WINS!");
 
     }
 
     if(black===0){
 
         showWin(
-        "⚪ WHITE WINS!"
-        );
+        "⚪ WHITE WINS!");
 
     }
 
 }
 
 /* SHOW WIN */
-
 function showWin(text){
 
-    gameOver = true;
+    gameOver=true;
 
-    let win =
+    let win=
     document.getElementById("win");
 
     win.style.display="flex";
 
-    win.innerHTML = `
-
+    win.innerHTML=`
     <div>${text}</div>
 
-    <button
-    class="mainBtn"
-    onclick="location.reload()">
-
+    <button onclick="location.reload()">
     🔄 Restart
-
     </button>
-
     `;
 
 }
 
 /* DRAW */
-
 function draw(){
-
-    ctx.clearRect(
-    0,
-    0,
-    boardSize,
-    boardSize
-    );
-
-    /* BOARD */
 
     for(let y=0;y<8;y++){
 
         for(let x=0;x<8;x++){
 
-            let px =
-            x*TILE;
+            let px=x*TILE;
+            let py=y*TILE;
 
-            let py =
-            y*TILE;
+            let dark=(x+y)%2;
 
-            let dark =
-            (x+y)%2;
-
-            let grad =
+            let grad=
             ctx.createLinearGradient(
-            px,
-            py,
+            px,py,
             px+TILE,
-            py+TILE
-            );
+            py+TILE);
 
             if(dark){
 
-                grad.addColorStop(
-                0,
-                "#78350f"
-                );
-
-                grad.addColorStop(
-                1,
-                "#431407"
-                );
+                grad.addColorStop(0,"#78350f");
+                grad.addColorStop(1,"#431407");
 
             }else{
 
-                grad.addColorStop(
-                0,
-                "#fcd34d"
-                );
-
-                grad.addColorStop(
-                1,
-                "#f59e0b"
-                );
+                grad.addColorStop(0,"#fcd34d");
+                grad.addColorStop(1,"#f59e0b");
 
             }
 
-            ctx.fillStyle =
-            grad;
+            ctx.fillStyle=grad;
 
             ctx.fillRect(
-            px,
-            py,
-            TILE,
-            TILE
-            );
+            px,py,TILE,TILE);
 
         }
 
     }
 
-    /* MOVE ZONES */
-
+    /* GREEN MOVE CELLS */
     if(selected){
 
-        getMoves(selected)
-        .forEach(m=>{
+        getMoves(selected).forEach(m=>{
 
-            ctx.fillStyle =
+            ctx.fillStyle=
             "rgba(0,255,120,.35)";
 
             ctx.fillRect(
             m.cell.x*TILE,
             m.cell.y*TILE,
             TILE,
-            TILE
-            );
+            TILE);
 
         });
 
     }
 
     /* PIECES */
-
     board.forEach(c=>{
 
         if(!c.piece) return;
 
-        let px =
+        let px=
         (c.piece.animX ?? c.x)
         *TILE + TILE/2;
 
-        let py =
+        let py=
         (c.piece.animY ?? c.y)
         *TILE + TILE/2;
 
-        /* SHADOW */
-
         ctx.beginPath();
 
-        ctx.fillStyle =
+        ctx.fillStyle=
         "rgba(0,0,0,.4)";
 
         ctx.ellipse(
         px,
-        py+7,
+        py+8,
         TILE*0.28,
         TILE*0.12,
         0,
         0,
-        Math.PI*2
-        );
+        Math.PI*2);
 
         ctx.fill();
 
-        /* 3D */
-
-        let grad =
+        let grad=
         ctx.createRadialGradient(
         px-TILE*.1,
-        py-TILE*.1,
+        py-TILE*.12,
         5,
         px,
         py,
-        TILE*.45
-        );
+        TILE*.45);
 
-        if(
-        c.piece.color==="white"
-        ){
+        if(c.piece.color==="white"){
 
-            grad.addColorStop(
-            0,
-            "#ffffff"
-            );
-
-            grad.addColorStop(
-            .4,
-            "#f8fafc"
-            );
-
-            grad.addColorStop(
-            1,
-            "#94a3b8"
-            );
+            grad.addColorStop(0,"#fff");
+            grad.addColorStop(1,"#94a3b8");
 
         }else{
 
-            grad.addColorStop(
-            0,
-            "#6b7280"
-            );
-
-            grad.addColorStop(
-            .5,
-            "#111827"
-            );
-
-            grad.addColorStop(
-            1,
-            "#000"
-            );
+            grad.addColorStop(0,"#6b7280");
+            grad.addColorStop(1,"#000");
 
         }
 
         ctx.beginPath();
 
-        ctx.fillStyle =
-        grad;
+        ctx.fillStyle=grad;
 
-        ctx.shadowBlur = 22;
+        ctx.shadowBlur=25;
 
-        ctx.shadowColor =
+        ctx.shadowColor=
         c.piece.color==="white"
         ?
         "#fff"
@@ -983,42 +741,21 @@ function draw(){
         py,
         TILE*.33,
         0,
-        Math.PI*2
-        );
+        Math.PI*2);
 
         ctx.fill();
 
-        ctx.shadowBlur = 0;
-
-        /* LIGHT */
-
-        ctx.beginPath();
-
-        ctx.fillStyle =
-        "rgba(255,255,255,.25)";
-
-        ctx.arc(
-        px-TILE*.08,
-        py-TILE*.08,
-        TILE*.07,
-        0,
-        Math.PI*2
-        );
-
-        ctx.fill();
-
-        /* KING */
+        ctx.shadowBlur=0;
 
         if(c.piece.king){
 
-            ctx.font =
-            TILE*.25 + "px Arial";
+            ctx.font=
+            TILE*.25+"px Arial";
 
             ctx.fillText(
             "👑",
-            px-TILE*.11,
-            py+TILE*.08
-            );
+            px-TILE*.12,
+            py+TILE*.08);
 
         }
 
@@ -1027,45 +764,36 @@ function draw(){
 }
 
 /* CLICK */
-
-canvas.addEventListener(
-"click",
-e=>{
+canvas.addEventListener("click",(e)=>{
 
     if(gameOver) return;
 
     if(
-    mode==="ai" &&
-    turn!==playerColor
+        mode==="ai" &&
+        turn!==playerColor
     ){
         return;
     }
 
-    let rect =
+    let rect=
     canvas.getBoundingClientRect();
 
-    let x =
-    Math.floor(
-    (e.clientX-rect.left)/TILE
-    );
+    let x=Math.floor(
+    (e.clientX-rect.left)/TILE);
 
-    let y =
-    Math.floor(
-    (e.clientY-rect.top)/TILE
-    );
+    let y=Math.floor(
+    (e.clientY-rect.top)/TILE);
 
-    let cell =
-    get(x,y);
+    let cell=get(x,y);
 
     if(selected){
 
-        let moves =
+        let moves=
         getMoves(selected);
 
-        let move =
+        let move=
         moves.find(
-        m=>m.cell===cell
-        );
+        m=>m.cell===cell);
 
         if(move){
 
@@ -1073,12 +801,11 @@ e=>{
             selected,
             cell,
             move,
-
             ()=>{
 
-                selected = null;
+                selected=null;
 
-                turn =
+                turn=
                 turn==="white"
                 ?
                 "black"
@@ -1086,25 +813,21 @@ e=>{
                 "white";
 
                 document.getElementById(
-                "turn"
-                ).innerText =
-
+                "turn").innerText=
                 turn.charAt(0)
                 .toUpperCase()
-
                 + turn.slice(1);
 
                 checkWin();
 
                 if(
-                mode==="ai" &&
-                turn!==playerColor
+                    mode==="ai" &&
+                    turn!==playerColor
                 ){
 
                     setTimeout(
                     aiMove,
-                    400
-                    );
+                    350);
 
                 }
 
@@ -1112,7 +835,7 @@ e=>{
 
         }else{
 
-            selected = null;
+            selected=null;
 
         }
 
@@ -1123,48 +846,40 @@ e=>{
         cell.piece.color===turn &&
 
         (
-        mode==="pvp" ||
-
-        cell.piece.color===
-        playerColor
+            mode==="pvp" ||
+            cell.piece.color===playerColor
         )
 
     ){
 
-        selected = cell;
+        selected=cell;
 
     }
 
 });
 
 /* AI */
-
 function aiMove(){
 
     if(gameOver) return;
 
-    let aiColor =
+    let aiColor=
     playerColor==="white"
     ?
     "black"
     :
     "white";
 
-    let pieces =
+    let pieces=
     board.filter(c=>
-
     c.piece &&
+    c.piece.color===aiColor);
 
-    c.piece.color===aiColor
-
-    );
-
-    let all = [];
+    let all=[];
 
     pieces.forEach(p=>{
 
-        getMoves(p)
-        .forEach(m=>{
+        getMoves(p).forEach(m=>{
 
             all.push({
                 p,
@@ -1182,63 +897,42 @@ function aiMove(){
         ?
         "⚪ WHITE WINS!"
         :
-        "⚫ BLACK WINS!"
-        );
+        "⚫ BLACK WINS!");
 
         return;
 
     }
 
-    let jumps =
+    let jumps=
     all.filter(
-    a=>a.m.type==="jump"
-    );
+    a=>a.m.type==="jump");
 
-    let chosen =
-    (jumps.length
-    ?
-    jumps
-    :
-    all)
-
+    let chosen=
+    (jumps.length?jumps:all)
     [
-
-    Math.floor(
-
-    Math.random()*
-
-    (
-    jumps.length
-    ?
-    jumps.length
-    :
-    all.length
-    )
-
-    )
-
+        Math.floor(
+        Math.random()*
+        (
+            jumps.length
+            ?
+            jumps.length
+            :
+            all.length
+        ))
     ];
 
     animate(
-
     chosen.p,
-
     chosen.m.cell,
-
     chosen.m,
-
     ()=>{
 
-        turn =
-        playerColor;
+        turn=playerColor;
 
         document.getElementById(
-        "turn"
-        ).innerText =
-
+        "turn").innerText=
         turn.charAt(0)
         .toUpperCase()
-
         + turn.slice(1);
 
         checkWin();
@@ -1248,8 +942,10 @@ function aiMove(){
 }
 
 /* LOOP */
-
 function loop(){
+
+    ctx.clearRect(
+    0,0,size,size);
 
     draw();
 
