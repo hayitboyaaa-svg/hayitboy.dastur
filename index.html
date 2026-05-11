@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkers PRO </title>
+<title>Checkers PRO</title>
 
 <style>
 
@@ -55,7 +55,7 @@ button:hover{
 
 /* HUD */
 .hud{
-    position:absolute;
+    position:fixed;
     top:10px;
     left:10px;
     color:white;
@@ -65,7 +65,32 @@ button:hover{
     backdrop-filter:blur(10px);
     line-height:1.8;
     font-size:18px;
-    z-index:5;
+    z-index:50;
+}
+
+/* MOBILE FIX */
+@media(max-width:700px){
+
+    .hud{
+        top:auto;
+        bottom:10px;
+        left:50%;
+        transform:translateX(-50%);
+        font-size:15px;
+        padding:10px 14px;
+        line-height:1.5;
+        white-space:nowrap;
+    }
+
+    .title{
+        font-size:32px;
+    }
+
+    button{
+        font-size:16px;
+        padding:12px 22px;
+    }
+
 }
 
 /* WIN */
@@ -288,14 +313,12 @@ function startGame(color){
 
     init();
 
-    // WHITE ALWAYS FIRST
     turn = "white";
 
     document.getElementById(
         "turn"
     ).innerText = "White";
 
-    // PLAYER BLACK => AI WHITE FIRST
     if(
         mode==="ai" &&
         playerColor==="black"
@@ -550,7 +573,7 @@ function draw(){
 
     ctx.fillRect(0,0,size,size);
 
-    // 3D BOARD
+    // BOARD
     for(let y=0;y<8;y++){
 
         for(let x=0;x<8;x++){
@@ -606,25 +629,32 @@ function draw(){
 
     }
 
-    // HIGHLIGHT
+    // GREEN MOVE CELLS
     if(selected){
 
         getMoves(selected).forEach(m=>{
 
-            ctx.beginPath();
-
             ctx.fillStyle =
             "rgba(0,255,120,.35)";
 
-            ctx.arc(
-                m.cell.x*TILE+TILE/2,
-                m.cell.y*TILE+TILE/2,
-                TILE*0.18,
-                0,
-                Math.PI*2
+            ctx.fillRect(
+                m.cell.x*TILE,
+                m.cell.y*TILE,
+                TILE,
+                TILE
             );
 
-            ctx.fill();
+            ctx.strokeStyle =
+            "rgba(0,255,120,.9)";
+
+            ctx.lineWidth = 3;
+
+            ctx.strokeRect(
+                m.cell.x*TILE+2,
+                m.cell.y*TILE+2,
+                TILE-4,
+                TILE-4
+            );
 
         });
 
@@ -643,7 +673,6 @@ function draw(){
         (c.piece.animY ?? c.y)
         *TILE + TILE/2;
 
-        // SHADOW
         ctx.beginPath();
 
         ctx.fillStyle =
@@ -661,7 +690,6 @@ function draw(){
 
         ctx.fill();
 
-        // 3D BODY
         let grad =
         ctx.createRadialGradient(
             px-TILE*0.1,
@@ -709,7 +737,6 @@ function draw(){
 
         ctx.fill();
 
-        // LIGHT
         ctx.beginPath();
 
         ctx.fillStyle =
@@ -725,7 +752,6 @@ function draw(){
 
         ctx.fill();
 
-        // KING
         if(c.piece.king){
 
             ctx.font =
