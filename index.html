@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>ONLINE CHECKERS PRO</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<title>Checkers PRO</title>
 
 <style>
 
@@ -16,10 +18,11 @@ body{
     margin:0;
     overflow:hidden;
     font-family:sans-serif;
-    background:radial-gradient(circle at top,#1e293b,#020617);
-    color:white;
+    background:
+    radial-gradient(circle at top,#1e293b,#020617);
 }
 
+/* MENU */
 #menu{
     position:fixed;
     inset:0;
@@ -28,98 +31,98 @@ body{
     justify-content:center;
     align-items:center;
     gap:18px;
-    background:rgba(0,0,0,.94);
-    z-index:100;
+    background:rgba(0,0,0,.92);
+    z-index:50;
 }
 
 .title{
+    color:white;
     font-size:42px;
     font-weight:bold;
     text-shadow:0 0 25px orange;
 }
 
-button,input{
-    border:none;
-    outline:none;
-    border-radius:16px;
-    padding:14px 20px;
-    font-size:18px;
-}
-
 button{
+    padding:14px 30px;
+    border:none;
+    border-radius:14px;
     cursor:pointer;
-    color:white;
+    font-size:18px;
     font-weight:bold;
-    background:linear-gradient(135deg,#f59e0b,#ef4444);
-    box-shadow:0 0 20px rgba(239,68,68,.4);
+    color:white;
+    background:
+    linear-gradient(135deg,#f59e0b,#ef4444);
+
+    box-shadow:
+    0 0 20px rgba(239,68,68,.4);
+
+    transition:.2s;
 }
 
-input{
-    width:260px;
-    text-align:center;
+button:hover{
+    transform:scale(1.05);
 }
 
-#topBar{
+/* HUD */
+.hud{
     position:fixed;
-    top:10px;
-    left:50%;
-    transform:translateX(-50%);
-    display:flex;
-    gap:12px;
-    z-index:50;
-}
 
-.panel{
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(10px);
-    padding:12px 18px;
-    border-radius:18px;
-    box-shadow:0 0 20px rgba(0,0,0,.25);
-}
-
-canvas{
-    display:block;
-    margin:auto;
-    filter:drop-shadow(0 0 40px rgba(255,140,0,.25));
-}
-
-#chatBox{
-    position:fixed;
-    right:12px;
     bottom:12px;
-    width:260px;
-    height:340px;
+    left:12px;
+
+    color:white;
+
     background:rgba(255,255,255,.08);
-    backdrop-filter:blur(10px);
-    border-radius:20px;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    z-index:60;
+
+    padding:12px 16px;
+
+    border-radius:16px;
+
+    backdrop-filter:blur(12px);
+
+    line-height:1.7;
+
+    font-size:16px;
+
+    z-index:20;
+
+    box-shadow:
+    0 0 20px rgba(0,0,0,.3);
 }
 
-#messages{
-    flex:1;
-    overflow:auto;
-    padding:10px;
-    font-size:14px;
+/* MENU BUTTON */
+#menuBtn{
+    position:fixed;
+
+    bottom:12px;
+    right:12px;
+
+    z-index:30;
+
+    border:none;
+    border-radius:16px;
+
+    padding:14px 18px;
+
+    font-size:17px;
+    font-weight:bold;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f59e0b,
+        #ef4444
+    );
+
+    box-shadow:
+    0 0 20px rgba(0,0,0,.35);
+
+    cursor:pointer;
 }
 
-#chatControls{
-    display:flex;
-}
-
-#chatInput{
-    flex:1;
-    border-radius:0;
-    font-size:14px;
-}
-
-#sendBtn{
-    border-radius:0;
-    padding:12px;
-}
-
+/* WIN */
 #win{
     position:fixed;
     inset:0;
@@ -128,11 +131,26 @@ canvas{
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    gap:20px;
-    z-index:200;
-    font-size:48px;
+    color:white;
+    z-index:60;
+    font-size:52px;
+    text-shadow:0 0 20px white;
+    gap:25px;
 }
 
+/* CANVAS */
+canvas{
+    display:block;
+    margin:auto;
+
+    image-rendering:auto;
+
+    filter:
+    drop-shadow(
+    0 0 40px rgba(255,140,0,.25));
+}
+
+/* PHONE */
 @media(max-width:768px){
 
     .title{
@@ -140,177 +158,177 @@ canvas{
         text-align:center;
     }
 
-    #topBar{
-        top:auto;
-        bottom:10px;
-        width:95%;
-        justify-content:center;
-        flex-wrap:wrap;
+    button{
+        font-size:16px;
+        padding:12px 22px;
     }
 
-    #chatBox{
-        width:100%;
-        height:180px;
-        right:0;
-        bottom:0;
-        border-radius:20px 20px 0 0;
+    .hud{
+        font-size:14px;
+        padding:10px 14px;
+        max-width:150px;
+    }
+
+    #menuBtn{
+        font-size:15px;
+        padding:12px 15px;
+    }
+
+    #win{
+        font-size:32px;
+        text-align:center;
+        padding:20px;
     }
 
 }
 
 </style>
 </head>
+
 <body>
 
+<!-- MENU -->
 <div id="menu">
 
     <div class="title">
-        🌍 ONLINE CHECKERS PRO
+        ⚫ CHECKERS PRO ⚪
     </div>
 
-    <button onclick="showCreateRoom()">
-        🎮 Create Room
-    </button>
+    <div id="mainMenu"
+    style="display:flex;
+    flex-direction:column;
+    gap:15px;">
 
-    <button onclick="showJoinRoom()">
-        🚪 Join Room
-    </button>
+        <button onclick="openColorMenu('pvp')">
+            👥 1 vs 1
+        </button>
 
-    <div id="roomUI" style="display:none; flex-direction:column; gap:14px; align-items:center;">
+        <button onclick="openColorMenu('ai')">
+            🤖 vs Robot
+        </button>
 
-        <input id="roomInput" placeholder="ROOM CODE">
+    </div>
 
-        <button id="roomActionBtn">
-            Continue
+    <div id="colorMenu"
+    style="display:none;
+    flex-direction:column;
+    gap:15px;">
+
+        <h2 style="color:white">
+            Choose Color
+        </h2>
+
+        <button onclick="startGame('white')">
+            ⚪ Play White
+        </button>
+
+        <button onclick="startGame('black')">
+            ⚫ Play Black
         </button>
 
     </div>
 
 </div>
 
-<div id="topBar">
+<!-- HUD -->
+<div class="hud">
 
-    <div class="panel">
-        Turn: <span id="turn">White</span>
-    </div>
+    Turn:
+    <span id="turn">White</span>
 
-    <div class="panel">
-        ⚪ <span id="whiteScore">0</span>
-    </div>
+    <br>
 
-    <div class="panel">
-        ⚫ <span id="blackScore">0</span>
-    </div>
+    ⚪ White:
+    <span id="wscore">0</span>
 
-    <div class="panel" id="roomCodePanel">
-        Room: ---
-    </div>
+    <br>
+
+    ⚫ Black:
+    <span id="bscore">0</span>
 
 </div>
 
-<div id="chatBox">
+<!-- MENU BTN -->
+<button id="menuBtn"
+onclick="location.reload()">
+☰ Menu
+</button>
 
-    <div id="messages"></div>
-
-    <div id="chatControls">
-        <input id="chatInput" placeholder="Message...">
-        <button id="sendBtn">➤</button>
-    </div>
-
-</div>
-
+<!-- WIN -->
 <div id="win"></div>
 
+<!-- GAME -->
 <canvas id="game"></canvas>
 
 <script>
 
-/*
-====================================
-ONLINE CHECKERS PRO
-====================================
+const canvas =
+document.getElementById("game");
 
-BU VERSIYA:
-- multiplayer tayyor structure
-- room system
-- online sync structure
-- mobile optimized
-- 3D graphics
-- animated pieces
-- rotated board
-- live chat
-- score system
-- king system
-- fast rendering
+const ctx =
+canvas.getContext("2d");
 
-Firebase yoki Socket.io ulansa
-haqiqiy online multiplayer bo'ladi.
+const DPR =
+Math.min(
+window.devicePixelRatio || 1,
+2
+);
 
-====================================
-*/
-
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
-
-const DPR = Math.min(window.devicePixelRatio || 1,2);
-
-let size = Math.min(innerWidth,innerHeight) * 0.88;
+let size =
+Math.min(innerWidth,innerHeight)*0.92;
 
 canvas.width = size * DPR;
 canvas.height = size * DPR;
 
-canvas.style.width = size + "px";
-canvas.style.height = size + "px";
+canvas.style.width = size+"px";
+canvas.style.height = size+"px";
 
 ctx.scale(DPR,DPR);
 
-const TILE = size / 8;
+const TILE = size/8;
 
 let board = [];
 let selected = null;
 
 let turn = "white";
+let mode = "pvp";
 let playerColor = "white";
 
-let roomCode = "";
-
-let whiteScore = 0;
-let blackScore = 0;
+let wScore = 0;
+let bScore = 0;
 
 let gameOver = false;
 
-let onlineMode = false;
+/* INIT */
+function init(){
 
-/*
-====================================
-INIT
-====================================
-*/
+    board=[];
 
-function initBoard(){
+    wScore=0;
+    bScore=0;
 
-    board = [];
+    updateScore();
 
     for(let y=0;y<8;y++){
 
         for(let x=0;x<8;x++){
 
-            let piece = null;
+            let piece=null;
 
             if((x+y)%2===1){
 
-                if(y < 3){
+                if(y<3){
 
-                    piece = {
+                    piece={
                         color:"black",
                         king:false
                     };
 
                 }
 
-                if(y > 4){
+                if(y>4){
 
-                    piece = {
+                    piece={
                         color:"white",
                         king:false
                     };
@@ -331,135 +349,78 @@ function initBoard(){
 
 }
 
-initBoard();
-
-/*
-====================================
-ROOM SYSTEM
-====================================
-*/
-
-function generateRoomCode(){
-
-    return Math.random()
-    .toString(36)
-    .substring(2,8)
-    .toUpperCase();
-
-}
-
-function showCreateRoom(){
-
-    document.getElementById("roomUI").style.display = "flex";
-
-    let code = generateRoomCode();
-
-    document.getElementById("roomInput").value = code;
-
-    document.getElementById("roomActionBtn").onclick = ()=>{
-
-        createRoom(code);
-
-    };
-
-}
-
-function showJoinRoom(){
-
-    document.getElementById("roomUI").style.display = "flex";
-
-    document.getElementById("roomInput").value = "";
-
-    document.getElementById("roomActionBtn").onclick = ()=>{
-
-        joinRoom(
-            document.getElementById("roomInput").value
-        );
-
-    };
-
-}
-
-function createRoom(code){
-
-    roomCode = code;
-
-    playerColor = "white";
-
-    startGame();
-
-}
-
-function joinRoom(code){
-
-    roomCode = code;
-
-    playerColor = "black";
-
-    startGame();
-
-}
-
-function startGame(){
-
-    document.getElementById("menu").style.display = "none";
-
-    document.getElementById("roomCodePanel").innerHTML =
-    "Room: " + roomCode;
-
-    onlineMode = true;
-
-}
-
-/*
-====================================
-UTILS
-====================================
-*/
-
+/* GET */
 function get(x,y){
 
     return board.find(
-        c=>c.x===x && c.y===y
-    );
+    c=>c.x===x && c.y===y);
 
 }
 
-function boardX(x){
+/* MENU */
+function openColorMenu(m){
 
-    return playerColor === "black"
-    ? 7 - x
-    : x;
+    mode=m;
 
-}
+    document.getElementById(
+    "mainMenu").style.display="none";
 
-function boardY(y){
-
-    return playerColor === "black"
-    ? 7 - y
-    : y;
+    document.getElementById(
+    "colorMenu").style.display="flex";
 
 }
 
-/*
-====================================
-MOVES
-====================================
-*/
+/* START */
+function startGame(color){
 
+    playerColor=color;
+
+    document.getElementById(
+    "menu").style.display="none";
+
+    init();
+
+    turn="white";
+
+    document.getElementById(
+    "turn").innerText="White";
+
+    if(
+        mode==="ai" &&
+        playerColor==="black"
+    ){
+
+        setTimeout(aiMove,400);
+
+    }
+
+}
+
+/* SCORE */
+function updateScore(){
+
+    document.getElementById(
+    "wscore").innerText=wScore;
+
+    document.getElementById(
+    "bscore").innerText=bScore;
+
+}
+
+/* MOVES */
 function getMoves(cell){
 
-    let moves = [];
+    let moves=[];
 
     if(!cell.piece) return moves;
 
-    let dirs =
+    let dirs=
     cell.piece.king
     ?
     [[1,1],[-1,1],[1,-1],[-1,-1]]
     :
     (
-        cell.piece.color === "white"
+        cell.piece.color==="white"
         ?
         [[1,-1],[-1,-1]]
         :
@@ -468,14 +429,14 @@ function getMoves(cell){
 
     dirs.forEach(d=>{
 
-        let nx = cell.x + d[0];
-        let ny = cell.y + d[1];
+        let nx=cell.x+d[0];
+        let ny=cell.y+d[1];
 
-        let jx = cell.x + d[0]*2;
-        let jy = cell.y + d[1]*2;
+        let jx=cell.x+d[0]*2;
+        let jy=cell.y+d[1]*2;
 
-        let n = get(nx,ny);
-        let j = get(jx,jy);
+        let n=get(nx,ny);
+        let j=get(jx,jy);
 
         if(n && !n.piece){
 
@@ -489,7 +450,7 @@ function getMoves(cell){
         if(
             n &&
             n.piece &&
-            n.piece.color !== cell.piece.color
+            n.piece.color!==cell.piece.color
         ){
 
             if(j && !j.piece){
@@ -510,79 +471,36 @@ function getMoves(cell){
 
 }
 
-/*
-====================================
-MOVE PIECE
-====================================
-*/
+/* ANIMATE */
+function animate(fromCell,toCell,move,callback){
 
-function movePiece(from,to,move){
+    let piece=fromCell.piece;
 
-    to.piece = from.piece;
+    let startX=fromCell.x;
+    let startY=fromCell.y;
 
-    from.piece = null;
+    let endX=toCell.x;
+    let endY=toCell.y;
 
-    if(move.type === "jump"){
+    let t=0;
 
-        move.kill.piece = null;
-
-        if(to.piece.color === "white"){
-            whiteScore++;
-        }else{
-            blackScore++;
-        }
-
-        updateScores();
-
-    }
-
-    if(
-        to.y === 0 &&
-        to.piece.color === "white"
-    ){
-        to.piece.king = true;
-    }
-
-    if(
-        to.y === 7 &&
-        to.piece.color === "black"
-    ){
-        to.piece.king = true;
-    }
-
-}
-
-/*
-====================================
-ANIMATION
-====================================
-*/
-
-function animate(from,to,move,callback){
-
-    let piece = from.piece;
-
-    let startX = from.x;
-    let startY = from.y;
-
-    let endX = to.x;
-    let endY = to.y;
-
-    let t = 0;
-
-    piece.animX = startX;
-    piece.animY = startY;
+    piece.animX=startX;
+    piece.animY=startY;
 
     function step(){
 
-        t += 0.08;
+        t += 0.075;
 
-        if(t >= 1){
+        if(t>=1){
 
-            piece.animX = null;
-            piece.animY = null;
+            piece.animX=null;
+            piece.animY=null;
 
-            movePiece(from,to,move);
+            movePiece(
+                fromCell,
+                toCell,
+                move
+            );
 
             callback();
 
@@ -590,11 +508,11 @@ function animate(from,to,move,callback){
 
         }
 
-        piece.animX =
-        startX + (endX-startX)*t;
+        piece.animX=
+        startX+(endX-startX)*t;
 
-        piece.animY =
-        startY + (endY-startY)*t;
+        piece.animY=
+        startY+(endY-startY)*t;
 
         requestAnimationFrame(step);
 
@@ -604,46 +522,137 @@ function animate(from,to,move,callback){
 
 }
 
-/*
-====================================
-SCORES
-====================================
-*/
+/* MOVE */
+function movePiece(from,to,move){
 
-function updateScores(){
+    to.piece=from.piece;
 
-    document.getElementById("whiteScore")
-    .innerText = whiteScore;
+    from.piece=null;
 
-    document.getElementById("blackScore")
-    .innerText = blackScore;
+    if(move.type==="jump"){
+
+        move.kill.piece=null;
+
+        if(to.piece.color==="white"){
+
+            wScore++;
+
+        }else{
+
+            bScore++;
+
+        }
+
+        updateScore();
+
+    }
+
+    if(
+        to.y===0 &&
+        to.piece.color==="white"
+    ){
+
+        to.piece.king=true;
+
+    }
+
+    if(
+        to.y===7 &&
+        to.piece.color==="black"
+    ){
+
+        to.piece.king=true;
+
+    }
 
 }
 
-/*
-====================================
-DRAW
-====================================
-*/
+/* WIN */
+function checkWin(){
 
+    let white=
+    board.filter(c=>
+    c.piece &&
+    c.piece.color==="white").length;
+
+    let black=
+    board.filter(c=>
+    c.piece &&
+    c.piece.color==="black").length;
+
+    if(white===0){
+
+        showWin(
+        "⚫ BLACK WINS!");
+
+    }
+
+    if(black===0){
+
+        showWin(
+        "⚪ WHITE WINS!");
+
+    }
+
+}
+
+/* SHOW WIN */
+function showWin(text){
+
+    gameOver=true;
+
+    let win=
+    document.getElementById("win");
+
+    win.style.display="flex";
+
+    win.innerHTML=`
+    <div>${text}</div>
+
+    <button onclick="location.reload()">
+    🔄 Restart
+    </button>
+    `;
+
+}
+
+/* BOARD ROTATE */
+function boardX(x){
+
+    return playerColor==="black"
+    ? 7 - x
+    : x;
+
+}
+
+function boardY(y){
+
+    return playerColor==="black"
+    ? 7 - y
+    : y;
+
+}
+
+/* DRAW */
 function draw(){
 
     for(let y=0;y<8;y++){
 
         for(let x=0;x<8;x++){
 
-            let px = boardX(x)*TILE;
-            let py = boardY(y)*TILE;
+            let drawX = boardX(x);
+            let drawY = boardY(y);
 
-            let dark = (x+y)%2;
+            let px=drawX*TILE;
+            let py=drawY*TILE;
 
-            let grad =
+            let dark=(x+y)%2;
+
+            let grad=
             ctx.createLinearGradient(
-                px,
-                py,
-                px+TILE,
-                py+TILE
-            );
+            px,py,
+            px+TILE,
+            py+TILE);
 
             if(dark){
 
@@ -657,77 +666,76 @@ function draw(){
 
             }
 
-            ctx.fillStyle = grad;
+            ctx.fillStyle=grad;
 
             ctx.fillRect(
-                px,
-                py,
-                TILE,
-                TILE
-            );
+            px,py,TILE,TILE);
 
         }
 
     }
 
+    /* GREEN MOVE CELLS */
     if(selected){
 
         getMoves(selected).forEach(m=>{
 
-            ctx.fillStyle =
+            ctx.fillStyle=
             "rgba(0,255,120,.35)";
 
             ctx.fillRect(
-                boardX(m.cell.x)*TILE,
-                boardY(m.cell.y)*TILE,
-                TILE,
-                TILE
-            );
+            boardX(m.cell.x)*TILE,
+            boardY(m.cell.y)*TILE,
+            TILE,
+            TILE);
 
         });
 
     }
 
+    /* PIECES */
     board.forEach(c=>{
 
         if(!c.piece) return;
 
-        let px =
-        boardX(c.piece.animX ?? c.x)
-        *TILE + TILE/2;
+        let drawX =
+        boardX(c.piece.animX ?? c.x);
 
-        let py =
-        boardY(c.piece.animY ?? c.y)
-        *TILE + TILE/2;
+        let drawY =
+        boardY(c.piece.animY ?? c.y);
+
+        let px=
+        drawX*TILE + TILE/2;
+
+        let py=
+        drawY*TILE + TILE/2;
 
         ctx.beginPath();
 
-        ctx.fillStyle =
+        ctx.fillStyle=
         "rgba(0,0,0,.4)";
 
         ctx.ellipse(
-            px,
-            py+8,
-            TILE*0.28,
-            TILE*0.12,
-            0,
-            0,
-            Math.PI*2
-        );
+        px,
+        py+8,
+        TILE*0.28,
+        TILE*0.12,
+        0,
+        0,
+        Math.PI*2);
 
         ctx.fill();
 
-        let grad =
+        let grad=
         ctx.createRadialGradient(
-            px-TILE*.1,
-            py-TILE*.12,
-            5,
-            px,
-            py,
-            TILE*.45
-        );
+        px-TILE*.1,
+        py-TILE*.12,
+        5,
+        px,
+        py,
+        TILE*.45);
 
-        if(c.piece.color === "white"){
+        if(c.piece.color==="white"){
 
             grad.addColorStop(0,"#fff");
             grad.addColorStop(1,"#94a3b8");
@@ -741,37 +749,37 @@ function draw(){
 
         ctx.beginPath();
 
-        ctx.fillStyle = grad;
+        ctx.fillStyle=grad;
 
-        ctx.shadowBlur = 25;
+        ctx.shadowBlur=25;
 
-        ctx.shadowColor =
-        c.piece.color === "white"
-        ? "#fff"
-        : "#000";
+        ctx.shadowColor=
+        c.piece.color==="white"
+        ?
+        "#fff"
+        :
+        "#000";
 
         ctx.arc(
-            px,
-            py,
-            TILE*.33,
-            0,
-            Math.PI*2
-        );
+        px,
+        py,
+        TILE*.33,
+        0,
+        Math.PI*2);
 
         ctx.fill();
 
-        ctx.shadowBlur = 0;
+        ctx.shadowBlur=0;
 
         if(c.piece.king){
 
-            ctx.font =
-            TILE*.25 + "px Arial";
+            ctx.font=
+            TILE*.25+"px Arial";
 
             ctx.fillText(
-                "👑",
-                px-TILE*.12,
-                py+TILE*.08
-            );
+            "👑",
+            px-TILE*.12,
+            py+TILE*.08);
 
         }
 
@@ -779,71 +787,86 @@ function draw(){
 
 }
 
-/*
-====================================
-CLICK
-====================================
-*/
-
-canvas.addEventListener("click",e=>{
+/* CLICK */
+canvas.addEventListener("click",(e)=>{
 
     if(gameOver) return;
 
-    if(turn !== playerColor) return;
+    if(
+        mode==="ai" &&
+        turn!==playerColor
+    ){
+        return;
+    }
 
-    let rect = canvas.getBoundingClientRect();
+    let rect=
+    canvas.getBoundingClientRect();
 
-    let x = Math.floor(
-        (e.clientX-rect.left)/TILE
-    );
+    let x=Math.floor(
+    (e.clientX-rect.left)/TILE);
 
-    let y = Math.floor(
-        (e.clientY-rect.top)/TILE
-    );
+    let y=Math.floor(
+    (e.clientY-rect.top)/TILE);
 
-    if(playerColor === "black"){
+    if(playerColor==="black"){
 
         x = 7 - x;
         y = 7 - y;
 
     }
 
-    let cell = get(x,y);
+    let cell=get(x,y);
 
     if(selected){
 
-        let move =
-        getMoves(selected)
-        .find(m=>m.cell===cell);
+        let moves=
+        getMoves(selected);
+
+        let move=
+        moves.find(
+        m=>m.cell===cell);
 
         if(move){
 
             animate(
-                selected,
-                cell,
-                move,
-                ()=>{
+            selected,
+            cell,
+            move,
+            ()=>{
 
-                    selected = null;
+                selected=null;
 
-                    turn =
-                    turn === "white"
-                    ? "black"
-                    : "white";
+                turn=
+                turn==="white"
+                ?
+                "black"
+                :
+                "white";
 
-                    updateTurn();
+                document.getElementById(
+                "turn").innerText=
+                turn.charAt(0)
+                .toUpperCase()
+                + turn.slice(1);
 
-                    checkWin();
+                checkWin();
 
-                    // ONLINE SEND
-                    sendMoveOnline();
+                if(
+                    mode==="ai" &&
+                    turn!==playerColor
+                ){
+
+                    setTimeout(
+                    aiMove,
+                    350);
 
                 }
-            );
+
+            });
 
         }else{
 
-            selected = null;
+            selected=null;
 
         }
 
@@ -851,154 +874,109 @@ canvas.addEventListener("click",e=>{
 
         cell &&
         cell.piece &&
-        cell.piece.color === turn &&
-        cell.piece.color === playerColor
+        cell.piece.color===turn &&
+
+        (
+            mode==="pvp" ||
+            cell.piece.color===playerColor
+        )
 
     ){
 
-        selected = cell;
+        selected=cell;
 
     }
 
 });
 
-/*
-====================================
-TURN
-====================================
-*/
+/* AI */
+function aiMove(){
 
-function updateTurn(){
+    if(gameOver) return;
 
-    document.getElementById("turn")
-    .innerText =
-    turn.charAt(0).toUpperCase()
-    + turn.slice(1);
+    let aiColor=
+    playerColor==="white"
+    ?
+    "black"
+    :
+    "white";
 
-}
-
-/*
-====================================
-WIN
-====================================
-*/
-
-function checkWin(){
-
-    let white =
+    let pieces=
     board.filter(c=>
-        c.piece &&
-        c.piece.color === "white"
-    ).length;
+    c.piece &&
+    c.piece.color===aiColor);
 
-    let black =
-    board.filter(c=>
-        c.piece &&
-        c.piece.color === "black"
-    ).length;
+    let all=[];
 
-    if(white === 0){
+    pieces.forEach(p=>{
 
-        showWin("⚫ BLACK WINS!");
+        getMoves(p).forEach(m=>{
+
+            all.push({
+                p,
+                m
+            });
+
+        });
+
+    });
+
+    if(all.length===0){
+
+        showWin(
+        playerColor==="white"
+        ?
+        "⚪ WHITE WINS!"
+        :
+        "⚫ BLACK WINS!");
+
+        return;
 
     }
 
-    if(black === 0){
+    let jumps=
+    all.filter(
+    a=>a.m.type==="jump");
 
-        showWin("⚪ WHITE WINS!");
+    let chosen=
+    (jumps.length?jumps:all)
+    [
+        Math.floor(
+        Math.random()*
+        (
+            jumps.length
+            ?
+            jumps.length
+            :
+            all.length
+        ))
+    ];
 
-    }
+    animate(
+    chosen.p,
+    chosen.m.cell,
+    chosen.m,
+    ()=>{
 
-}
+        turn=playerColor;
 
-function showWin(text){
+        document.getElementById(
+        "turn").innerText=
+        turn.charAt(0)
+        .toUpperCase()
+        + turn.slice(1);
 
-    gameOver = true;
+        checkWin();
 
-    let win =
-    document.getElementById("win");
-
-    win.style.display = "flex";
-
-    win.innerHTML = `
-
-        <div>${text}</div>
-
-        <button onclick="location.reload()">
-            🔄 Restart
-        </button>
-
-    `;
-
-}
-
-/*
-====================================
-ONLINE PLACEHOLDERS
-====================================
-*/
-
-function sendMoveOnline(){
-
-    console.log("MOVE SENT");
-
-    // BU YERGA:
-    // firebase update
-    // yoki socket emit
-    // qo'shiladi
+    });
 
 }
 
-function receiveMoveOnline(){
-
-    // online move receive
-
-}
-
-/*
-====================================
-CHAT
-====================================
-*/
-
-const messages =
-document.getElementById("messages");
-
-document.getElementById("sendBtn")
-.onclick = sendMessage;
-
-function sendMessage(){
-
-    let input =
-    document.getElementById("chatInput");
-
-    if(!input.value.trim()) return;
-
-    let div = document.createElement("div");
-
-    div.innerHTML =
-    "🟢 " + input.value;
-
-    div.style.marginBottom = "8px";
-
-    messages.appendChild(div);
-
-    messages.scrollTop =
-    messages.scrollHeight;
-
-    input.value = "";
-
-}
-
-/*
-====================================
-LOOP
-====================================
-*/
-
+/* LOOP */
 function loop(){
 
-    ctx.clearRect(0,0,size,size);
+    ctx.clearRect(
+    0,0,size,size);
 
     draw();
 
@@ -1009,5 +987,6 @@ function loop(){
 loop();
 
 </script>
+
 </body>
 </html>
