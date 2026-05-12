@@ -616,6 +616,23 @@ function showWin(text){
 
 }
 
+/* BOARD ROTATE */
+function boardX(x){
+
+    return playerColor==="black"
+    ? 7 - x
+    : x;
+
+}
+
+function boardY(y){
+
+    return playerColor==="black"
+    ? 7 - y
+    : y;
+
+}
+
 /* DRAW */
 function draw(){
 
@@ -623,8 +640,11 @@ function draw(){
 
         for(let x=0;x<8;x++){
 
-            let px=x*TILE;
-            let py=y*TILE;
+            let drawX = boardX(x);
+            let drawY = boardY(y);
+
+            let px=drawX*TILE;
+            let py=drawY*TILE;
 
             let dark=(x+y)%2;
 
@@ -664,8 +684,8 @@ function draw(){
             "rgba(0,255,120,.35)";
 
             ctx.fillRect(
-            m.cell.x*TILE,
-            m.cell.y*TILE,
+            boardX(m.cell.x)*TILE,
+            boardY(m.cell.y)*TILE,
             TILE,
             TILE);
 
@@ -678,13 +698,17 @@ function draw(){
 
         if(!c.piece) return;
 
+        let drawX =
+        boardX(c.piece.animX ?? c.x);
+
+        let drawY =
+        boardY(c.piece.animY ?? c.y);
+
         let px=
-        (c.piece.animX ?? c.x)
-        *TILE + TILE/2;
+        drawX*TILE + TILE/2;
 
         let py=
-        (c.piece.animY ?? c.y)
-        *TILE + TILE/2;
+        drawY*TILE + TILE/2;
 
         ctx.beginPath();
 
@@ -783,6 +807,13 @@ canvas.addEventListener("click",(e)=>{
 
     let y=Math.floor(
     (e.clientY-rect.top)/TILE);
+
+    if(playerColor==="black"){
+
+        x = 7 - x;
+        y = 7 - y;
+
+    }
 
     let cell=get(x,y);
 
