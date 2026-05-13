@@ -203,8 +203,32 @@ canvas{
             👥 1 vs 1
         </button>
 
-        <button onclick="openColorMenu('ai')">
+        <button onclick="openDifficultyMenu()">
             🤖 vs Robot
+        </button>
+
+    </div>
+
+    <!-- DIFFICULTY -->
+    <div id="difficultyMenu"
+    style="display:none;
+    flex-direction:column;
+    gap:15px;">
+
+        <h2 style="color:white">
+            Choose Difficulty
+        </h2>
+
+        <button onclick="setDifficulty('easy')">
+            🟢 Easy
+        </button>
+
+        <button onclick="setDifficulty('hard')">
+            🟠 Hard
+        </button>
+
+        <button onclick="setDifficulty('impossible')">
+            🔴 Impossible
         </button>
 
     </div>
@@ -294,6 +318,8 @@ let turn = "white";
 let mode = "pvp";
 let playerColor = "white";
 
+let aiLevel = "easy";
+
 let wScore = 0;
 let bScore = 0;
 
@@ -364,6 +390,32 @@ function openColorMenu(m){
 
     document.getElementById(
     "mainMenu").style.display="none";
+
+    document.getElementById(
+    "colorMenu").style.display="flex";
+
+}
+
+/* OPEN AI LEVEL MENU */
+function openDifficultyMenu(){
+
+    mode="ai";
+
+    document.getElementById(
+    "mainMenu").style.display="none";
+
+    document.getElementById(
+    "difficultyMenu").style.display="flex";
+
+}
+
+/* SET LEVEL */
+function setDifficulty(level){
+
+    aiLevel=level;
+
+    document.getElementById(
+    "difficultyMenu").style.display="none";
 
     document.getElementById(
     "colorMenu").style.display="flex";
@@ -468,6 +520,29 @@ function getMoves(cell){
     });
 
     return moves;
+
+}
+
+/* AI SCORE */
+function evaluateMove(p,m){
+
+    let score=0;
+
+    if(m.type==="jump"){
+        score+=50;
+    }
+
+    if(m.cell.y===0 || m.cell.y===7){
+        score+=25;
+    }
+
+    if(p.piece.king){
+        score+=20;
+    }
+
+    score+=Math.random()*5;
+
+    return score;
 
 }
 
@@ -675,7 +750,6 @@ function draw(){
 
     }
 
-    /* GREEN MOVE CELLS */
     if(selected){
 
         getMoves(selected).forEach(m=>{
@@ -693,7 +767,6 @@ function draw(){
 
     }
 
-    /* PIECES */
     board.forEach(c=>{
 
         if(!c.piece) return;
@@ -914,7 +987,8 @@ function aiMove(){
 
             all.push({
                 p,
-                m
+                m,
+                score:evaluateMove(p,m)
             });
 
         });
@@ -934,23 +1008,54 @@ function aiMove(){
 
     }
 
-    let jumps=
-    all.filter(
-    a=>a.m.type==="jump");
+    let chosen;
 
-    let chosen=
-    (jumps.length?jumps:all)
-    [
-        Math.floor(
-        Math.random()*
-        (
-            jumps.length
-            ?
-            jumps.length
-            :
-            all.length
-        ))
-    ];
+    /* EASY */
+    if(aiLevel==="easy"){
+
+        chosen=
+        all[
+            Math.floor(
+            Math.random()*all.length
+            )
+        ];
+
+    }
+
+    /* HARD */
+    if(aiLevel==="hard"){
+
+        all.sort(
+        (a,b)=>b.score-a.score);
+
+        chosen=all[0];
+
+    }
+
+    /* IMPOSSIBLE */
+    if(aiLevel==="impossible"){
+
+        let jumps=
+        all.filter(
+        a=>a.m.type==="jump");
+
+        if(jumps.length){
+
+            jumps.sort(
+            (a,b)=>b.score-a.score);
+
+            chosen=jumps[0];
+
+        }else{
+
+            all.sort(
+            (a,b)=>b.score-a.score);
+
+            chosen=all[0];
+
+        }
+
+    }
 
     animate(
     chosen.p,
