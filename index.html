@@ -466,18 +466,13 @@ function getMoves(cell){
 
     if(!cell.piece) return moves;
 
-    let dirs=
-    cell.piece.king
-    ?
-    [[1,1],[-1,1],[1,-1],[-1,-1]]
-    :
-    (
-        cell.piece.color==="white"
-        ?
-        [[1,-1],[-1,-1]]
-        :
-        [[1,1],[-1,1]]
-    );
+    /* ORQAGA HAM YURADI */
+    let dirs = [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+    ];
 
     dirs.forEach(d=>{
 
@@ -1010,7 +1005,6 @@ function aiMove(){
 
     let chosen;
 
-    /* EASY */
     if(aiLevel==="easy"){
 
         chosen=
@@ -1022,7 +1016,6 @@ function aiMove(){
 
     }
 
-    /* HARD */
     if(aiLevel==="hard"){
 
         all.sort(
@@ -1032,7 +1025,6 @@ function aiMove(){
 
     }
 
-    /* IMPOSSIBLE */
     if(aiLevel==="impossible"){
 
         let jumps=
