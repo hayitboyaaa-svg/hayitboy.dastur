@@ -63,7 +63,6 @@ button:hover{
     transform:scale(1.05);
 }
 
-/* HUD */
 .hud{
     position:fixed;
     bottom:12px;
@@ -80,7 +79,6 @@ button:hover{
     0 0 20px rgba(0,0,0,.3);
 }
 
-/* MENU BUTTON */
 #menuBtn{
     position:fixed;
     bottom:12px;
@@ -103,7 +101,6 @@ button:hover{
     cursor:pointer;
 }
 
-/* WIN */
 #win{
     position:fixed;
     inset:0;
@@ -119,7 +116,6 @@ button:hover{
     gap:25px;
 }
 
-/* CANVAS */
 canvas{
     display:block;
     margin:auto;
@@ -129,7 +125,6 @@ canvas{
     0 0 40px rgba(255,140,0,.25));
 }
 
-/* PHONE */
 @media(max-width:768px){
 
     .title{
@@ -166,7 +161,6 @@ canvas{
 
 <body>
 
-<!-- MENU -->
 <div id="menu">
 
     <div class="title">
@@ -188,7 +182,6 @@ canvas{
 
     </div>
 
-    <!-- DIFFICULTY -->
     <div id="difficultyMenu"
     style="display:none;
     flex-direction:column;
@@ -233,7 +226,6 @@ canvas{
 
 </div>
 
-<!-- HUD -->
 <div class="hud">
 
     Turn:
@@ -251,16 +243,13 @@ canvas{
 
 </div>
 
-<!-- MENU BTN -->
 <button id="menuBtn"
 onclick="location.reload()">
 ☰ Menu
 </button>
 
-<!-- WIN -->
 <div id="win"></div>
 
-<!-- GAME -->
 <canvas id="game"></canvas>
 
 <script>
@@ -514,23 +503,30 @@ function getMoves(cell){
     }
 
     /* ODDIY SHASHKA */
-    let dirs = [
+
+    /* OLDINGA YURADI */
+    let moveDirs=
+    cell.piece.color==="white"
+    ?
+    [[1,-1],[-1,-1]]
+    :
+    [[1,1],[-1,1]];
+
+    /* ORQAGA HAM URA OLADI */
+    let jumpDirs=[
         [1,1],
         [-1,1],
         [1,-1],
         [-1,-1]
     ];
 
-    dirs.forEach(d=>{
+    /* YURISH */
+    moveDirs.forEach(d=>{
 
         let nx=cell.x+d[0];
         let ny=cell.y+d[1];
 
-        let jx=cell.x+d[0]*2;
-        let jy=cell.y+d[1]*2;
-
         let n=get(nx,ny);
-        let j=get(jx,jy);
 
         if(n && !n.piece){
 
@@ -540,6 +536,20 @@ function getMoves(cell){
             });
 
         }
+
+    });
+
+    /* URISH */
+    jumpDirs.forEach(d=>{
+
+        let nx=cell.x+d[0];
+        let ny=cell.y+d[1];
+
+        let jx=cell.x+d[0]*2;
+        let jy=cell.y+d[1]*2;
+
+        let n=get(nx,ny);
+        let j=get(jx,jy);
 
         if(
             n &&
